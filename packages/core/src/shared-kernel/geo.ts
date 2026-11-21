@@ -7,7 +7,6 @@ const EARTH_RADIUS_KM = 6371
 
 const toRadians = (degrees: number) => (degrees * Math.PI) / 180
 
-/** Distancia en línea recta (fórmula de Haversine). Base de la validación de cobertura (ORD-03). */
 export function distanceKm(from: GeoPoint, to: GeoPoint): number {
   const dLat = toRadians(to.lat - from.lat)
   const dLng = toRadians(to.lng - from.lng)

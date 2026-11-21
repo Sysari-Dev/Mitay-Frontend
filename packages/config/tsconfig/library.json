@@ -1,9 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "//": "Paquetes sin DOM ni React (core, utils). Al no incluir 'dom' en lib, usar window/document es error de compilación: así garantizamos que funcionen en Expo.",
   "extends": "./base.json",
   "compilerOptions": {
-    "lib": ["ES2022"],
+    "lib": [
+      "ES2022"
+    ],
     "types": []
   }
 }

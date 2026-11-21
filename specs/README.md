@@ -3,7 +3,7 @@
 Cada funcionalidad nace aquí **antes** de escribir código.
 
 ## Flujo
-1. Copia `_template/` a `specs/<CODIGO>-<slug>/` (ej. `specs/CAT-03-extractor-pdf/`).
+1. Copia `_template/` a `specs/<CODE>-<slug>/` con el slug en inglés (ej. `specs/CAT-03-pdf-extractor/`).
 2. Escribe `spec.md` (qué y por qué). Se revisa y aprueba.
 3. Escribe `plan.md` (cómo: módulo, capas, pantallas, endpoints).
 4. Desglosa `tasks.md` en tareas pequeñas y verificables.

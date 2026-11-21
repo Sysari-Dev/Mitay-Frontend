@@ -3,10 +3,10 @@
 ## Módulo y capas
 | Capa | Archivo(s) | Responsabilidad |
 |---|---|---|
-| domain | `packages/core/src/<ctx>/domain/...` | |
-| application | `packages/core/src/<ctx>/application/...` | |
-| infrastructure | `packages/core/src/<ctx>/infrastructure/...` | |
-| presentation | `apps/<app>/src/modules/<ctx>/presentation/...` | |
+| domain | `packages/core/src/<module>/domain/...` | |
+| application | `packages/core/src/<module>/application/...` | |
+| infrastructure | `packages/core/src/<module>/infrastructure/...` | |
+| presentation | `apps/<app>/src/modules/<module>/presentation/...` | |
 
 ## Rutas y pantallas
 | Ruta | page.tsx → View | Sections |

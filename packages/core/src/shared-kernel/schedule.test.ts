@@ -14,31 +14,30 @@ const schedule: WeeklySchedule = {
   6: [],
 }
 
-/** Crea un instante a partir de una hora local de Perú (UTC-5). */
 const limaTime = (isoLocal: string) => new Date(`${isoLocal}-05:00`)
 
 describe('isOpenNow', () => {
-  it('abierto dentro del rango (lunes 13:00)', () => {
+  it('is open inside a range (Monday 13:00)', () => {
     expect(isOpenNow(schedule, limaTime('2026-11-16T13:00:00'))).toBe(true)
   })
 
-  it('cerrado justo a la hora de cierre (lunes 16:00)', () => {
+  it('is closed exactly at closing time (Monday 16:00)', () => {
     expect(isOpenNow(schedule, limaTime('2026-11-16T16:00:00'))).toBe(false)
   })
 
-  it('cerrado en día sin rangos (domingo)', () => {
+  it('is closed on a day without ranges (Sunday)', () => {
     expect(isOpenNow(schedule, limaTime('2026-11-15T13:00:00'))).toBe(false)
   })
 
-  it('cruce de medianoche: viernes 23:00 abierto', () => {
+  it('overnight range: open on Friday 23:00', () => {
     expect(isOpenNow(schedule, limaTime('2026-11-20T23:00:00'))).toBe(true)
   })
 
-  it('cruce de medianoche: sábado 01:30 sigue abierto', () => {
+  it('overnight range: still open on Saturday 01:30', () => {
     expect(isOpenNow(schedule, limaTime('2026-11-21T01:30:00'))).toBe(true)
   })
 
-  it('cruce de medianoche: sábado 02:00 ya cerró', () => {
+  it('overnight range: closed on Saturday 02:00', () => {
     expect(isOpenNow(schedule, limaTime('2026-11-21T02:00:00'))).toBe(false)
   })
 })

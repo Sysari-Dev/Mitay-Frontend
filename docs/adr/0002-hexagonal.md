@@ -1,4 +1,4 @@
-# ADR-0002: Hexagonal ligera por módulos (DDD)
+# ADR-0002: Hexagonal
 
 - **Estado:** Aceptado
 - **Fecha:** 2026-11-20
@@ -7,11 +7,13 @@
 MITAY tiene reglas de negocio reales (horario de atención, radio de cobertura, total del pedido, borrador de carta desde PDF) que deben ser idénticas en web, ERP, admin y la app mobile (Expo). Si viven dentro de componentes React, se duplican y divergen.
 
 ## Decisión
-- Organizar por **módulos de negocio**: `identity`, `restaurant`, `catalog`, `orders`, `notifications`, `administration` + `shared-kernel`.
-- Cada módulo en `packages/core/src/<modulo>/` con capas `domain` (puro), `application` (casos de uso + puertos), `infrastructure` (adaptadores HTTP + mappers) e `index.ts` público.
-- La UI de cada app vive en `apps/<app>/src/modules/<modulo>/presentation/{views,sections,components,hooks}`.
-- **"Ligera":** puertos e interfaces solo donde aportan (repositorios). Los módulos CRUD pueden tener un dominio mínimo.
-- Las reglas se hacen cumplir con `eslint-plugin-boundaries`.
+Arquitectura hexagonal **ligera**, organizada por módulos de negocio:
+- Módulos: `shared-kernel`, `identity`, `restaurant`, `catalog`, `orders`, `notifications`, `administration`.
+- Cada módulo en `packages/core/src/<module>/` con capas `domain` (puro), `application` (casos de uso + puertos), `infrastructure` (adaptadores HTTP + mappers) e `index.ts` público.
+- La interfaz de cada app vive en `apps/<app>/src/modules/<module>/presentation/{views,sections,components,hooks}`.
+- **Ligera:** puertos e interfaces solo donde aportan (repositorios). Los módulos casi CRUD pueden tener un dominio mínimo.
+- `@mitay/core` compila sin la librería `dom` de TypeScript: usar `window` o `document` es un error de compilación, así se garantiza que funcione en Expo.
+- Las reglas de dependencia se harán cumplir con `eslint-plugin-boundaries` desde `@mitay/config/eslint/next`.
 
 ## Alternativas consideradas
 - **Feature-based (estilo bulletproof-react):** más común en Next.js, pero mezcla las reglas de negocio con React y dificulta compartirlas con Expo.

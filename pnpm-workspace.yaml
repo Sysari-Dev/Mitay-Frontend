@@ -6,8 +6,6 @@ allowBuilds:
   sharp: false
   unrs-resolver: false
 
-# Versiones únicas para todo el monorepo. En package.json se usa "catalog:".
-# Para actualizar una librería, cambia SOLO esta línea y corre `pnpm install`.
 catalog:
   next: "16.4.6"
   react: "19.3.0"

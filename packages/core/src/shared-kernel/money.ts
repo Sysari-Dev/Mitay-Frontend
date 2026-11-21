@@ -1,4 +1,3 @@
-/** Dinero en céntimos de sol (entero). Nunca usar decimales en el dominio. */
 export type Cents = number
 
 export function solesToCents(soles: number): Cents {

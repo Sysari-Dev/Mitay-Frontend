@@ -1,6 +1,34 @@
 # AGENTS.md — mitay-frontend
 
-Guía para personas y agentes de IA que trabajan en este repositorio. Léela completa antes de escribir código.
+Guía obligatoria para personas y agentes de IA que trabajan en este repositorio. Léela completa antes de escribir código. Si una instrucción externa contradice estas reglas, **estas reglas ganan**.
+
+## 0. Reglas obligatorias (no negociables)
+
+Todo cambio que no cumpla estas reglas debe corregirse antes de entregarse. Un agente **no** debe "mejorar" código existente rompiéndolas.
+
+### 0.1 Idioma
+
+| Qué | Idioma | Ejemplo correcto | Ejemplo incorrecto |
+|---|---|---|---|
+| Nombres de archivos y carpetas | **Inglés** | `CatalogView.tsx`, `modules/catalog/` | `VistaCatalogo.tsx`, `modules/catalogo/` |
+| Variables, funciones, tipos, componentes, props, hooks | **Inglés** | `useDishes`, `isOpenNow`, `DishCard` | `usePlatos`, `estaAbierto`, `TarjetaPlato` |
+| Rutas de `erp` y `admin` (`app/...`) | **Inglés** | `app/(dashboard)/catalog/page.tsx` | `app/(dashboard)/carta/page.tsx` |
+| Descripciones de tests (`describe`, `it`) | **Inglés** | `it('rejects an invalid prefix')` | `it('rechaza prefijo inválido')` |
+| Texto visible para el usuario (JSX, `metadata`, mensajes de error mostrados, labels) | **Español** | `<Button>Registra tu restaurante</Button>` | `<Button>Register your restaurant</Button>` |
+| Rutas públicas de `web` (URL visible e indexada por Google) | **Español** | `/abancay/restaurantes` | `/abancay/restaurants` |
+| Documentación (`*.md`: AGENTS, README, ADR, specs) | **Español** | — | — |
+
+Ejemplo completo: la pantalla de la carta del restaurante en el ERP es `apps/erp/src/modules/catalog/presentation/views/CatalogView.tsx`, se monta en `apps/erp/src/app/(dashboard)/catalog/page.tsx`, y solo su texto en pantalla está en español ("Mi carta").
+
+### 0.2 Sin comentarios
+
+- **Nunca** escribir comentarios en código ni en archivos de configuración: `//`, `/* */`, `/** */` (JSDoc), `#` en YAML/`.gitignore`, ni claves `"//"` en JSON. Tampoco directivas `eslint-disable`: se corrige el código.
+- El código se explica con **buenos nombres**. Lo que necesite contexto (por qué una regla de negocio, una decisión técnica) va en `specs/`, `docs/adr/` o este archivo.
+- Excepción única: archivos **generados** por herramientas que no se editan a mano (`next-env.d.ts`, `packages/api-client/src/generated/*`).
+
+### 0.3 Arquitectura
+
+Respetar las capas y reglas de dependencia de la sección 3 y la ubicación de archivos de la sección 5. No mover archivos entre capas, no crear carpetas nuevas en la raíz de una app ni agregar dependencias sin anotarlo en un spec o ADR.
 
 ## 1. Qué es MITAY
 
@@ -16,48 +44,69 @@ Este repo contiene **solo el frontend web**:
 
 Cada app es un **proyecto de Vercel distinto** del mismo repo (Root Directory = `apps/<app>`).
 
-Otros repos del equipo: **backend NestJS** (fuente del contrato OpenAPI; en local debe usar el puerto **4000** para no chocar con las apps) y **mobile React Native/Expo**. El backend debe permitir (CORS) los tres dominios de arriba.
+Otros repos del equipo: **backend NestJS** (fuente del contrato OpenAPI, en local en el puerto **4000**) y **mobile React Native/Expo**.
 
-### Paquetes (`packages/`)
+Decisiones de arquitectura: [Monorepo](docs/adr/0001-monorepo.md), [Hexagonal](docs/adr/0002-hexagonal.md), [UI atómica](docs/adr/0003-ui-atomic.md), [Contrato](docs/adr/0004-contract.md).
+
+## 2. Monorepo
+
+### 2.1 Estructura
+
+```
+mitay-frontend/
+├─ apps/
+│  ├─ web/  erp/  admin/       Next.js. Cada una: src/, public/, next.config.ts, tsconfig.json, eslint.config.mjs, package.json
+├─ packages/
+│  ├─ config/                  @mitay/config      tsconfig compartidos + ESLint compartido
+│  ├─ core/                    @mitay/core        lógica de negocio por módulo (hexagonal)
+│  ├─ utils/                   @mitay/utils       helpers puros
+│  ├─ ui/                      @mitay/ui          tokens Tailwind + componentes atómicos
+│  └─ api-client/              @mitay/api-client  cliente tipado del API
+├─ specs/                      SDD por requerimiento
+├─ docs/adr/                   decisiones de arquitectura
+├─ pnpm-workspace.yaml         workspaces + catalog de versiones
+├─ turbo.json                  orquestación de tareas con caché
+└─ AGENTS.md  README.md  .gitignore   (únicos, solo en la raíz)
+```
+
+`AGENTS.md`, `README.md` y `.gitignore` existen **solo en la raíz**. No crear copias por app ni por paquete. Next.js generaría un `AGENTS.md` por app: está desactivado con `agentRules: false` en cada `next.config.ts`.
+
+### 2.2 Paquetes
 
 | Paquete | Import | Contenido |
 |---|---|---|
-| `@mitay/config` | (tsconfig `extends`) | `base`, `nextjs`, `library` (sin DOM, para core/utils), `react-library` |
-| `@mitay/core` | `@mitay/core/shared-kernel`, `@mitay/core/<modulo>` | Lógica de negocio por módulo. Hoy: `shared-kernel` (`Cents`, `GeoPoint`, `distanceKm`, `City`, `WeeklySchedule`, `isOpenNow`) |
+| `@mitay/config` | `extends: "@mitay/config/tsconfig/<x>.json"`, `@mitay/config/eslint/next` | tsconfig `base`, `nextjs`, `library` (sin DOM, para core/utils), `react-library`; ESLint de las apps |
+| `@mitay/core` | `@mitay/core/shared-kernel`, `@mitay/core/<module>` | Hoy: `shared-kernel` (`Cents`, `GeoPoint`, `distanceKm`, `City`, `WeeklySchedule`, `isOpenNow`) |
 | `@mitay/utils` | `@mitay/utils` | `formatPEN`, `isValidRuc` |
-| `@mitay/ui` | `@mitay/ui/atoms/button`, `@mitay/ui/lib/utils`, `@mitay/ui/styles.css` | Tokens Tailwind + componentes genéricos |
-| `@mitay/api-client` | `@mitay/api-client` | `createApiClient(baseUrl)` tipado con el OpenAPI (hoy con schema placeholder) |
-| `@mitay/auth` | — | **Pendiente**: se crea cuando se acuerde con backend el manejo del refresh token (AUTH-03) |
+| `@mitay/ui` | `@mitay/ui/atoms/button`, `@mitay/ui/lib/utils`, `@mitay/ui/styles.css` | Tokens + componentes genéricos |
+| `@mitay/api-client` | `@mitay/api-client` | `createApiClient(baseUrl)` tipado con el OpenAPI |
+| `@mitay/auth` | — | **Pendiente** hasta acordar con backend el refresh token (AUTH-03) |
 
-Los paquetes exportan TypeScript directo (sin build): Next.js/Turbopack los compila automáticamente. Un módulo nuevo de `core` se agrega en `exports` de `packages/core/package.json`.
+Los paquetes exportan TypeScript directo (sin build): Turbopack los compila. Un módulo nuevo de `core` se agrega en `exports` de `packages/core/package.json`.
 
-## 2. Stack
+### 2.3 Dependencias y versiones
 
-- Monorepo **Turborepo + pnpm** (`apps/` = desplegables, `packages/` = librerías internas `@mitay/*`).
-- **Next.js (App Router)** en las 3 apps, desplegadas en **Vercel** (un proyecto por app).
-- **TypeScript estricto** en todo.
-- **Tailwind CSS v4** + **shadcn/ui**. Tokens de diseño en `packages/ui/src/styles/globals.css` (`@theme`).
+- Las versiones compartidas viven en el **catalog** de `pnpm-workspace.yaml`. En `package.json` se escribe `"catalog:"`.
+- Actualizar una librería = cambiar su línea del catalog + `pnpm install`.
+- Librería nueva usada por ≥2 workspaces → agregarla al catalog.
+- Solo **pnpm** (nunca npm ni yarn).
+
+### 2.4 Stack
+
+- **Next.js 16.4 (App Router)**, **React 19**, **TypeScript estricto**.
+- **Tailwind CSS v4** + **shadcn/ui** (`cn` del paquete oficial `cn`).
 - **TanStack Query** (estado del servidor), **Zustand** (solo estado de UI), **React Hook Form + Zod** (formularios).
 - **Vitest** (unit), **Playwright** (e2e), **MSW** (mocks del API).
 
-> **Next.js 16.4 tiene cambios recientes** (APIs y convenciones pueden diferir de lo que conoces). Antes de escribir código de Next, lee la guía correspondiente en `apps/<app>/node_modules/next/dist/docs/`. (Next generaría este aviso en un `AGENTS.md` por app; lo desactivamos con `agentRules: false` para tener un solo AGENTS.md.)
+> **Next.js 16.4 tiene cambios recientes.** Antes de escribir código de Next, lee la guía correspondiente en `apps/<app>/node_modules/next/dist/docs/`.
 
-### Dependencias y versiones
+## 3. Hexagonal
 
-- Las versiones compartidas viven en el **catalog** de `pnpm-workspace.yaml`. En `package.json` se escribe `"catalog:"` en vez de la versión.
-- Para actualizar (ej. Next.js): cambia solo la línea del catalog y corre `pnpm install`.
-- Si agregas una librería que ya está en el catalog, usa `"catalog:"`. Si es nueva y la usarán ≥2 workspaces, agrégala al catalog.
-- ESLint compartido: `@mitay/config/eslint/next`. Cada app solo tiene `export { default } from '@mitay/config/eslint/next'`.
-
-## 3. Arquitectura: hexagonal ligera por módulos
-
-### 3.1 Módulos (bounded contexts)
-
-Cada módulo corresponde a un área de negocio y a los códigos del documento de requerimientos:
+### 3.1 Módulos
 
 | Módulo | Requerimientos |
 |---|---|
-| `shared-kernel` | Conceptos comunes: `Money` (PEN), `GeoPoint`, `City`, `WeeklySchedule` |
+| `shared-kernel` | Conceptos comunes: `Cents`, `GeoPoint`, `City`, `WeeklySchedule` |
 | `identity` | AUTH-01..04 |
 | `restaurant` | REST-01..05 |
 | `catalog` | CAT-01..05 |
@@ -67,28 +116,27 @@ Cada módulo corresponde a un área de negocio y a los códigos del documento de
 
 ### 3.2 Capas
 
-La lógica vive en `packages/core/src/<modulo>/`; la interfaz vive en cada app.
+La lógica vive en `packages/core/src/<module>/`; la interfaz vive en cada app.
 
 ```
 packages/core/src/catalog/
 ├─ domain/          Entidades, value objects y reglas PURAS. Sin React, sin fetch, sin Next.
 ├─ application/     Casos de uso + puertos (interfaces, ej. CatalogRepository).
-├─ infrastructure/  Adaptadores: repositorio HTTP (usa @mitay/api-client), mappers DTO→dominio.
+├─ infrastructure/  Adaptadores: repositorio HTTP (usa @mitay/api-client), mappers DTO → dominio.
 └─ index.ts         API pública del módulo. Lo único que se importa desde fuera.
 
 apps/erp/src/modules/catalog/presentation/
-├─ views/           Pantalla completa (MenuView). Compone sections.
-├─ sections/        Bloques de negocio de la pantalla (MenuHeaderSection, PdfImportSection).
-├─ components/      Piezas de negocio reutilizables en el módulo (DishCard, AvailabilityToggle).
+├─ views/           Pantalla completa (CatalogView). Compone sections.
+├─ sections/        Bloques de la pantalla (CatalogHeaderSection, PdfImportSection).
+├─ components/      Piezas de negocio del módulo (DishCard, AvailabilityToggle).
 └─ hooks/           Hooks del módulo (useDishes, useToggleDish) con TanStack Query.
 ```
 
-**Hexagonal "ligera"** significa: misma estructura de carpetas en todos los módulos, pero la profundidad varía. En módulos con reglas reales (`restaurant`, `catalog`, `orders`) el dominio es rico. En módulos casi CRUD (`administration`, `notifications`) el dominio puede ser solo tipos y el caso de uso una línea. No crear abstracciones sin un motivo.
+**Ligera:** misma estructura de carpetas en todos los módulos, pero la profundidad varía. En `restaurant`, `catalog` y `orders` el dominio es rico; en `administration` y `notifications` puede ser solo tipos. No crear abstracciones sin motivo.
 
-### 3.3 Ejemplo completo (ORD-03: validar horario y cobertura)
+### 3.3 Ejemplo (ORD-03: validar horario y cobertura)
 
 ```ts
-// packages/core/src/orders/domain/canPlaceOrder.ts  (dominio puro, testeable, lo reutiliza Expo)
 export function canPlaceOrder(r: RestaurantSnapshot, to: GeoPoint, now: Date): OrderEligibility {
   if (!r.isManuallyOpen) return { ok: false, reason: 'CLOSED_MANUALLY' }
   if (!isOpenNow(r.schedule, now)) return { ok: false, reason: 'OUT_OF_SCHEDULE' }
@@ -97,127 +145,131 @@ export function canPlaceOrder(r: RestaurantSnapshot, to: GeoPoint, now: Date): O
 }
 ```
 
-La UI solo pregunta `canPlaceOrder(...)` y muestra el motivo; nunca reimplementa la regla.
+Vive en `packages/core/src/orders/domain/canPlaceOrder.ts`. La UI solo llama `canPlaceOrder(...)` y traduce `reason` a un texto en español; nunca reimplementa la regla.
 
-### 3.4 Reglas de dependencia (las verifica ESLint con `eslint-plugin-boundaries`)
+### 3.4 Reglas de dependencia
 
 1. `presentation → application → domain`. `infrastructure` implementa puertos de `application`.
 2. `domain` no importa nada fuera de sí mismo y de `shared-kernel`.
 3. Un módulo solo importa otro módulo a través de su `index.ts`.
-4. `packages/core` y `packages/utils` **no** usan React, DOM, `window` ni Next (deben funcionar en Expo).
-5. `packages/ui` **no** conoce el negocio: no importa `@mitay/core` ni usa palabras como "plato" o "restaurante".
+4. `packages/core` y `packages/utils` **no** usan React, DOM, `window` ni Next (su tsconfig no incluye `dom`: no compila si se usan).
+5. `packages/ui` **no** conoce el negocio: no importa `@mitay/core` ni usa palabras como "dish" o "restaurant".
 6. `app/` (rutas de Next) no contiene lógica.
 
-## 4. Capa de interfaz (UI)
+## 4. UI atómica
 
 ### 4.1 Jerarquía
 
 ```
-app/(grupo)/ruta/page.tsx   → ruta de Next: params, metadata, permisos. Renderiza UNA View.
-  └─ View                   → modules/<ctx>/presentation/views
-      └─ Sections           → modules/<ctx>/presentation/sections
-          └─ Components     → modules/<ctx>/presentation/components (negocio)
-              └─ @mitay/ui  → atoms / molecules / organisms (genéricos, Atomic Design)
-layout.tsx                  → usa templates de @mitay/ui (DashboardTemplate, MarketingTemplate)
+app/(group)/route/page.tsx  → ruta de Next: params, metadata, permisos. Renderiza UNA View.
+  └─ View                   → modules/<module>/presentation/views
+      └─ Sections           → modules/<module>/presentation/sections
+          └─ Components     → modules/<module>/presentation/components (negocio)
+              └─ @mitay/ui  → atoms / molecules / organisms (genéricos)
+layout.tsx                  → usa templates de @mitay/ui
 ```
 
 ```tsx
-// apps/erp/src/app/(dashboard)/carta/page.tsx — así de delgado
-import { MenuView } from '@/modules/catalog/presentation/views/MenuView'
+import { CatalogView } from '@/modules/catalog/presentation/views/CatalogView'
 
 export const metadata = { title: 'Mi carta' }
+
 export default function Page() {
-  return <MenuView />
+  return <CatalogView />
 }
 ```
 
-### 4.2 Atomic Design (solo en `packages/ui`)
+### 4.2 Niveles en `packages/ui`
 
 | Nivel | Ejemplos |
 |---|---|
-| `atoms/` | Button, Input, Badge, Avatar, Switch |
-| `molecules/` | FormField, SearchBar, PriceTag, StatusPill |
-| `organisms/` | DataTable, Sidebar, Modal, FileDropzone (genéricos) |
-| `templates/` | DashboardTemplate, MarketingTemplate |
+| `atoms/` | button, input, badge, avatar, switch |
+| `molecules/` | form-field, search-bar, price-tag, status-pill |
+| `organisms/` | data-table, sidebar, modal, file-dropzone (genéricos) |
+| `templates/` | dashboard-template, marketing-template |
 
-Los organismos con vocabulario de negocio (DishCard, ScheduleEditor, LiveOrderToast) **no** van aquí: van en `presentation/components` o `presentation/sections` del módulo.
+Los organismos con vocabulario de negocio (DishCard, ScheduleEditor, LiveOrderToast) van en `presentation/components` o `presentation/sections` del módulo, nunca en `packages/ui`.
 
 ### 4.3 Estilos
 
 - Solo Tailwind. Nada de CSS modules ni styled-components.
 - Colores, tipografía y radios **siempre** desde tokens (`bg-primary`, no `bg-[#e85d04]`).
-- La marca de cada restaurante (REST-02) se aplica con variables CSS (`--brand-primary`) en un contenedor, no generando clases.
-- Cada app tiene en `src/app/globals.css` solo `@import "tailwindcss";` y `@import "@mitay/ui/styles.css";`. El `@source` hacia `packages/ui` ya está declarado dentro de `@mitay/ui/styles.css`.
-- Variantes de un componente con `class-variance-authority` (`cva`) y combinación de clases con `cn()`. Usamos el paquete oficial de shadcn `cn` (reemplazo de clsx + tailwind-merge): `@mitay/ui/lib/utils` lo reexporta, y los componentes que agrega el CLI lo importan directo desde `"cn"`. Ambas formas son equivalentes.
+- Marca del restaurante (REST-02): variable `--brand-primary` en un contenedor + utilidad `bg-brand`.
+- `src/app/globals.css` de cada app contiene solo `@import "tailwindcss";` y `@import "@mitay/ui/styles.css";`.
+- Variantes con `cva`; clases combinadas con `cn()` (`@mitay/ui/lib/utils` o directo desde `"cn"`, son equivalentes).
 
 ### 4.4 Agregar componentes de shadcn/ui
 
 ```bash
 cd packages/ui
-pnpm dlx shadcn@latest add badge   # se instala en src/atoms/badge.tsx
+pnpm dlx shadcn@latest add badge
 ```
 
-`components.json` envía los componentes a `src/atoms/`. Si el componente es más complejo (ej. `dialog`, `data-table`), muévelo a `molecules/` u `organisms/` según corresponda. En `packages/ui` los archivos usan **kebab-case** (`button.tsx`), igual que shadcn, para que el CLI siga funcionando; se importan como `@mitay/ui/atoms/button`.
+Se instalan en `src/atoms/`. Si el componente es más complejo (`dialog`, `data-table`), muévelo a `molecules/` u `organisms/`. En `packages/ui` los archivos van en **kebab-case** (convención de shadcn) y se importan como `@mitay/ui/atoms/button`. Tras agregar un componente, borrar cualquier comentario que traiga.
 
-## 5. ¿Dónde pongo esto? (shared)
+## 5. ¿Dónde pongo esto?
 
 | Qué | Dónde |
 |---|---|
-| Regla de negocio | `packages/core/src/<ctx>/domain` |
-| Llamada al backend | `packages/core/src/<ctx>/infrastructure` (vía `@mitay/api-client`) |
-| Hook de negocio (useDishes) | `apps/<app>/src/modules/<ctx>/presentation/hooks` |
-| Hook genérico usado por 1 app (useDebounce) | `apps/<app>/src/shared/hooks` |
-| Hook genérico usado por ≥2 apps | `packages/ui/src/hooks` |
+| Regla de negocio | `packages/core/src/<module>/domain` |
+| Llamada al backend | `packages/core/src/<module>/infrastructure` (vía `@mitay/api-client`) |
+| Hook de negocio (useDishes) | `apps/<app>/src/modules/<module>/presentation/hooks` |
+| Hook genérico de 1 app (useDebounce) | `apps/<app>/src/shared/hooks` |
+| Hook genérico de ≥2 apps | `packages/ui/src/hooks` |
 | Providers (Query, Theme, Auth) | `apps/<app>/src/shared/providers` |
 | Componente visual genérico | `packages/ui` |
-| Componente solo de una app, sin negocio | `apps/<app>/src/shared/components` |
+| Componente de 1 app, sin negocio | `apps/<app>/src/shared/components` |
 | Helper puro (formatear soles, validar RUC) | `packages/utils` |
-| Sesión, tokens, guards por rol | `packages/auth` |
+| Configuración de TypeScript o ESLint | `packages/config` |
 
-**Regla:** algo sube a `shared/` o a `packages/` solo cuando lo usan **2 o más** módulos o apps. Mientras tanto, vive junto a quien lo usa.
+**Regla:** algo sube a `shared/` o a `packages/` solo cuando lo usan **2 o más** módulos o apps.
 
-## 6. Contrato con el backend
+## 6. Contrato
 
-- La fuente de verdad es el **OpenAPI** que expone NestJS (`@nestjs/swagger`).
-- `packages/api-client` genera los tipos con `openapi-typescript` y usa `openapi-fetch`. **Nunca escribir a mano tipos de DTOs.**
+- La fuente de verdad es el **OpenAPI** del backend NestJS (`http://localhost:4000/api-json`).
+- `pnpm --filter @mitay/api-client generate` genera los tipos. **Nunca escribir tipos de DTOs a mano.**
 - Los DTOs **no** cruzan a `domain`: se convierten en `infrastructure/mappers`.
-- Si un endpoint aún no existe: definirlo en el spec, mockearlo con **MSW** y avisar al backend.
+- Endpoint que aún no existe: definirlo en el spec, mockearlo con **MSW** y avisar al backend.
 
-## 7. Flujo de trabajo: Spec-Driven Development (SDD)
+## 7. Flujo de trabajo (SDD)
 
-1. Toda funcionalidad nace en `specs/<CODIGO>-<slug>/` (ej. `specs/REST-01-perfil-horarios/`), copiando `specs/_template/`.
+1. Toda funcionalidad nace en `specs/<CODE>-<slug-in-english>/` (ej. `specs/REST-01-profile-schedule/`), copiando `specs/_template/`.
 2. `spec.md`: **qué** y **por qué** (historias, criterios de aceptación). Se aprueba antes de programar.
 3. `plan.md`: **cómo** (módulo, capas, pantallas, endpoints, estados de error).
-4. `tasks.md`: lista de tareas pequeñas y verificables.
-5. El PR referencia el código (`feat(catalog): CAT-03 extractor de PDF`).
-6. Decisiones que afectan a más de un módulo se registran como ADR en `docs/adr/`.
+4. `tasks.md`: tareas pequeñas y verificables.
+5. El PR referencia el código: `feat(catalog): CAT-03 extractor de PDF`.
+6. Decisiones que afectan a más de un módulo → ADR en `docs/adr/`.
 
 ## 8. Convenciones
 
-- **Idioma:** código e identificadores en **inglés**; documentación, specs y textos de UI en **español**.
-- **Archivos:** componentes `PascalCase.tsx`; hooks `useXxx.ts`; resto `camelCase.ts`; carpetas `kebab-case`. Excepción: `packages/ui` usa kebab-case (convención de shadcn).
-- **Commits:** Conventional Commits con scope del módulo: `feat(orders): ORD-03 bloqueo por cobertura`.
-- **Exports:** con nombre (`export function`), sin `export default`, salvo los archivos que Next.js exige (`page.tsx`, `layout.tsx`).
+- **Archivos:** componentes `PascalCase.tsx`; hooks `useXxx.ts`; resto `camelCase.ts`; carpetas `kebab-case`. Excepción: `packages/ui` en kebab-case.
+- **Exports:** con nombre (`export function`), sin `export default`, salvo los archivos que Next.js exige (`page.tsx`, `layout.tsx`, `next.config.ts`).
 - **Tests:** todo `domain/` y `application/` lleva test Vitest al lado (`canPlaceOrder.test.ts`).
-- **Dinero:** siempre en céntimos (`number` entero) dentro del dominio; se formatea solo en la UI con `@mitay/utils`.
-- **Ciudad:** concepto global. Las rutas públicas de `web` llevan la ciudad: `/abancay/restaurantes`.
+- **Dinero:** en céntimos (`Cents`, entero) dentro del dominio; se formatea solo en la UI con `formatPEN`.
+- **Ciudad:** concepto global; las rutas públicas de `web` llevan la ciudad: `/abancay/restaurantes`.
+- **Commits:** Conventional Commits con scope del módulo: `feat(orders): ORD-03 bloqueo por cobertura`.
 
 ## 9. Comandos
 
 ```bash
-pnpm install          # instalar dependencias
-pnpm dev              # levantar todas las apps
-pnpm dev --filter erp # solo una app (web :3000, erp :3001, admin :3002)
-pnpm build | lint | typecheck | test
+pnpm install                                 # instala todo el monorepo
+pnpm dev                                     # web :3000, erp :3001, admin :3002
+pnpm dev --filter erp                        # solo una app
+pnpm check                                   # typecheck + lint + test + build
 pnpm --filter @mitay/core test               # tests de un paquete
-pnpm --filter @mitay/api-client generate     # regenerar tipos desde el OpenAPI del backend (:4000/api-json)
-pnpm add <paquete> --filter erp              # agregar dependencia a una app
+pnpm --filter @mitay/api-client generate     # tipos desde el OpenAPI del backend
+pnpm add <package> --filter erp              # dependencia para una app
 ```
+
+Antes de entregar cualquier cambio: `pnpm check` en verde.
 
 ## 10. Qué NO hacer
 
+- No escribir comentarios (sección 0.2).
+- No nombrar archivos, carpetas, variables ni rutas de erp/admin en español (sección 0.1).
 - No poner lógica de negocio en componentes, `page.tsx` o hooks: va en `domain`.
-- No importar `infrastructure` desde la UI saltándose los casos de uso o el `index.ts` del módulo.
+- No importar `infrastructure` desde la UI saltándose el `index.ts` del módulo.
 - No usar `fetch` directo: siempre `@mitay/api-client`.
-- No crear carpetas globales tipo `utils/` o `helpers/` dentro de una app sin pasar por la regla del punto 5.
-- No agregar dependencias nuevas sin anotarlo en el `plan.md` del spec o en un ADR.
+- No crear `AGENTS.md`, `README.md` ni `.gitignore` dentro de apps o paquetes.
+- No escribir versiones en `package.json` si la librería está en el catalog.
+- No agregar dependencias sin anotarlo en el `plan.md` del spec o en un ADR.

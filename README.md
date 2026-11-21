@@ -9,8 +9,16 @@ Frontend de **MITAY** (Sysari): catálogo hiperlocal de restaurantes en Abancay 
 | `apps/admin` | Panel interno de Sysari | http://localhost:3002 | `admin.mitay.sysari.net` |
 
 - Arquitectura y reglas: [AGENTS.md](AGENTS.md) (**léelo antes de programar**)
-- Decisiones técnicas: [docs/adr](docs/adr/README.md)
+- Decisiones técnicas: [Monorepo](docs/adr/0001-monorepo.md) · [Hexagonal](docs/adr/0002-hexagonal.md) · [UI atómica](docs/adr/0003-ui-atomic.md) · [Contrato](docs/adr/0004-contract.md)
 - Funcionalidades (SDD): [specs](specs/README.md)
+
+### Reglas básicas
+
+- Código, archivos, carpetas y rutas del ERP/admin en **inglés** (`CatalogView.tsx`, `/catalog`).
+- Documentación y texto que ve el usuario en **español**.
+- **Sin comentarios** en el código: se explica con buenos nombres y en la documentación.
+
+Detalle completo en la sección 0 de [AGENTS.md](AGENTS.md).
 
 ---
 
@@ -110,4 +118,4 @@ Porque cada app se despliega por separado y debe saber qué necesita. Lo que **n
 
 ## Despliegue
 
-Cada app es un proyecto distinto en Vercel apuntando a este mismo repo (Root Directory = `apps/<app>`). Ver [ADR-0001](docs/adr/0001-monorepo-turborepo.md).
+Cada app es un proyecto distinto en Vercel apuntando a este mismo repo (Root Directory = `apps/<app>`). Ver [ADR-0001 Monorepo](docs/adr/0001-monorepo.md).
