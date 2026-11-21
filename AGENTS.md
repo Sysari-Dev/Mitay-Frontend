@@ -26,7 +26,27 @@ Ejemplo completo: la pantalla de la carta del restaurante en el ERP es `apps/erp
 - El código se explica con **buenos nombres**. Lo que necesite contexto (por qué una regla de negocio, una decisión técnica) va en `specs/`, `docs/adr/` o este archivo.
 - Excepción única: archivos **generados** por herramientas que no se editan a mano (`next-env.d.ts`, `packages/api-client/src/generated/*`).
 
-### 0.3 Arquitectura
+### 0.3 JSX compacto
+
+- **Nunca** dejar líneas en blanco dentro del JSX (entre etiquetas hermanas, dentro de un `return (...)` o de cualquier bloque de marcado). La jerarquía se lee por la indentación, no por espacios vacíos.
+- Las líneas en blanco solo se usan fuera del JSX: entre imports y código, entre funciones o entre bloques lógicos de TypeScript.
+
+```tsx
+return (
+  <main className="flex flex-col gap-8 p-8">
+    <header>
+      <h1>Administración MITAY</h1>
+    </header>
+    <section>
+      <ThemePreview />
+    </section>
+  </main>
+)
+```
+
+Incorrecto: el mismo bloque con una línea vacía entre `</header>` y `<section>`.
+
+### 0.4 Arquitectura
 
 Respetar las capas y reglas de dependencia de la sección 3 y la ubicación de archivos de la sección 5. No mover archivos entre capas, no crear carpetas nuevas en la raíz de una app ni agregar dependencias sin anotarlo en un spec o ADR.
 
@@ -113,6 +133,11 @@ Los paquetes exportan TypeScript directo (sin build): Turbopack los compila. Un 
 | `orders` | ORD-01..04 |
 | `notifications` | NOT-01..02 |
 | `administration` | ADM-01..05 |
+| `marketing` | Landing y captación B2B. Solo existe en `apps/web` como `presentation` (sin dominio en `core`) |
+
+Hoy existen: `apps/web/src/modules/marketing` (`LandingView`), `apps/erp/src/modules/restaurant` (`DashboardView`), `apps/admin/src/modules/administration` (`DashboardView`). Todos son de baja fidelidad.
+
+Variables de entorno de `web`: `NEXT_PUBLIC_ERP_URL` (ver `apps/web/.env.example`), leída en `apps/web/src/shared/lib/env.ts`.
 
 ### 3.2 Capas
 
@@ -194,11 +219,45 @@ Los organismos con vocabulario de negocio (DishCard, ScheduleEditor, LiveOrderTo
 
 - Solo Tailwind. Nada de CSS modules ni styled-components.
 - Colores, tipografía y radios **siempre** desde tokens (`bg-primary`, no `bg-[#e85d04]`).
+- **La paleta por defecto de Tailwind está desactivada** (`--color-*: initial`): `bg-red-500`, `text-white`, `bg-zinc-100` no existen. Solo se usan los tokens de abajo.
 - Marca del restaurante (REST-02): variable `--brand-primary` en un contenedor + utilidad `bg-brand`.
 - `src/app/globals.css` de cada app contiene solo `@import "tailwindcss";` y `@import "@mitay/ui/styles.css";`.
 - Variantes con `cva`; clases combinadas con `cn()` (`@mitay/ui/lib/utils` o directo desde `"cn"`, son equivalentes).
 
-### 4.4 Agregar componentes de shadcn/ui
+### 4.4 Identidad de color
+
+Paleta **"Rocoto + Chicha"**, inspirada en la cocina peruana. El coral despierta el apetito sin ser el naranja de Rappi/Didi ni el rojo de PedidosYa/iFood; el morado no lo usa ninguna app de delivery. Se descartaron el amarillo/ámbar (Glovo y un cliente de Sysari, Dados & Bocados, usan dorado sobre negro) y el azul (reduce el apetito).
+
+| Token | Nombre | Uso |
+|---|---|---|
+| `primary` | Rocoto (coral) | CTA principal, marca, acciones clave |
+| `secondary` | Chicha morada | Acciones secundarias, navegación, identidad del admin |
+| `tertiary` | Menta (huacatay) | Acentos frescos, etiquetas, gráficos |
+
+- `destructive` es un carmesí más oscuro que `primary` para que un error nunca se confunda con un CTA.
+- Antes de usar un color de un cliente de Sysari como base de MITAY, revisar que no se parezca a su identidad.
+
+### 4.5 Tokens y temas
+
+Definidos en `packages/ui/src/styles/globals.css`: valores claros en `:root`, oscuros en `.dark`. Cada color tiene su pareja `-foreground` para el texto encima.
+
+| Grupo | Utilidades |
+|---|---|
+| Superficies | `background`, `foreground`, `card`, `popover`, `muted`, `accent` |
+| Marca | `primary`, `secondary`, `tertiary`, `brand` |
+| Estados | `success`, `warning`, `info`, `destructive` |
+| Bordes y foco | `border`, `input`, `ring` |
+| Gráficos | `chart-1` … `chart-5` |
+| Paneles laterales | `sidebar`, `sidebar-foreground`, `sidebar-primary`, `sidebar-accent`, `sidebar-border`, `sidebar-ring` |
+| Radios | `rounded-sm` … `rounded-2xl` (base `--radius`) |
+
+- **Modo oscuro:** clase `dark` en `<html>`. **El tema por defecto es siempre el claro** (`DEFAULT_THEME = 'light'`), aunque el sistema operativo esté en oscuro. Solo cambia si el usuario lo elige; su elección se guarda en `localStorage` (`mitay-theme`). La opción `system` existe pero no es la predeterminada.
+- `@mitay/ui/lib/theme`: `themeScript` (va en el `<head>` del `layout.tsx` de cada app, evita el parpadeo), `applyTheme('light' | 'dark' | 'system')`.
+- `@mitay/ui/molecules/theme-toggle`: botón para cambiar de tema.
+- `@mitay/ui/organisms/theme-preview`: muestra todos los tokens (útil para revisar la paleta).
+- Un color nuevo se agrega en **tres lugares**: `:root`, `.dark` y `@theme inline`.
+
+### 4.6 Agregar componentes de shadcn/ui
 
 ```bash
 cd packages/ui
@@ -267,6 +326,7 @@ Antes de entregar cualquier cambio: `pnpm check` en verde.
 
 - No escribir comentarios (sección 0.2).
 - No nombrar archivos, carpetas, variables ni rutas de erp/admin en español (sección 0.1).
+- No dejar líneas en blanco dentro del JSX (sección 0.3).
 - No poner lógica de negocio en componentes, `page.tsx` o hooks: va en `domain`.
 - No importar `infrastructure` desde la UI saltándose el `index.ts` del módulo.
 - No usar `fetch` directo: siempre `@mitay/api-client`.

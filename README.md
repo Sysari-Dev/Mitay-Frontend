@@ -17,6 +17,7 @@ Frontend de **MITAY** (Sysari): catálogo hiperlocal de restaurantes en Abancay 
 - Código, archivos, carpetas y rutas del ERP/admin en **inglés** (`CatalogView.tsx`, `/catalog`).
 - Documentación y texto que ve el usuario en **español**.
 - **Sin comentarios** en el código: se explica con buenos nombres y en la documentación.
+- **JSX compacto**: sin líneas en blanco entre etiquetas.
 
 Detalle completo en la sección 0 de [AGENTS.md](AGENTS.md).
 
