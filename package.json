@@ -1,0 +1,20 @@
+{
+  "name": "mitay-frontend",
+  "private": true,
+  "description": "Frontend de MITAY: landing/SEO (web), ERP de restaurantes (erp) y panel de Sysari (admin).",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "check": "turbo run typecheck lint test build"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@12.21.0",
+  "devDependencies": {
+    "turbo": "^2.11.13"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@mitay/ui/organisms",
+    "ui": "@mitay/ui/atoms",
+    "utils": "@mitay/ui/lib/utils",
+    "lib": "@mitay/ui/lib",
+    "hooks": "@mitay/ui/hooks"
+  }
+}

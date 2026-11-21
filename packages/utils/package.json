@@ -1,0 +1,19 @@
+{
+  "name": "@mitay/utils",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Helpers puros sin React ni DOM (formateo, validaciones). Reutilizable por Expo.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@mitay/config": "workspace:*",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

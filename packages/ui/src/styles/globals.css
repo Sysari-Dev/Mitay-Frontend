@@ -1,0 +1,125 @@
+/*
+ * Tokens de diseño de MITAY (Tailwind CSS v4).
+ * Cada app importa este archivo DESPUÉS de "tailwindcss":
+ *   @import "tailwindcss";
+ *   @import "@mitay/ui/styles.css";
+ *
+ * Paleta provisional (cálida, gastronómica). Ajustar cuando exista la identidad de marca final.
+ */
+
+/* Escanea los componentes de este paquete para generar sus clases. */
+@source "../";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(0.99 0.004 75);
+  --foreground: oklch(0.2 0.02 50);
+
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--foreground);
+
+  /* MITAY: naranja cálido */
+  --primary: oklch(0.65 0.19 42);
+  --primary-foreground: oklch(0.99 0.005 75);
+
+  --secondary: oklch(0.95 0.02 75);
+  --secondary-foreground: oklch(0.3 0.03 50);
+
+  --muted: oklch(0.96 0.01 75);
+  --muted-foreground: oklch(0.5 0.02 50);
+
+  --accent: oklch(0.94 0.03 75);
+  --accent-foreground: oklch(0.3 0.03 50);
+
+  --success: oklch(0.62 0.15 150);
+  --warning: oklch(0.78 0.16 80);
+  --destructive: oklch(0.58 0.22 27);
+
+  --border: oklch(0.9 0.015 75);
+  --input: oklch(0.9 0.015 75);
+  --ring: oklch(0.65 0.19 42);
+
+  /*
+   * Marca del restaurante (REST-02). Por defecto = marca MITAY.
+   * Se sobrescribe en un contenedor: <div style={{ '--brand-primary': restaurant.color }}>
+   */
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+}
+
+.dark {
+  --background: oklch(0.17 0.01 50);
+  --foreground: oklch(0.96 0.01 75);
+
+  --card: oklch(0.21 0.012 50);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.21 0.012 50);
+  --popover-foreground: var(--foreground);
+
+  --primary: oklch(0.72 0.17 45);
+  --primary-foreground: oklch(0.17 0.01 50);
+
+  --secondary: oklch(0.27 0.015 50);
+  --secondary-foreground: var(--foreground);
+
+  --muted: oklch(0.27 0.015 50);
+  --muted-foreground: oklch(0.7 0.02 60);
+
+  --accent: oklch(0.3 0.02 50);
+  --accent-foreground: var(--foreground);
+
+  --destructive: oklch(0.68 0.19 25);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.72 0.17 45);
+}
+
+/* Expone las variables como utilidades: bg-primary, text-muted-foreground, bg-brand, etc. */
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand-primary);
+  --color-brand-foreground: var(--brand-primary-foreground);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}

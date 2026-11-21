@@ -1,0 +1,9 @@
+{
+  "extends": "@mitay/config/tsconfig/react-library.json",
+  "compilerOptions": {
+    "paths": {
+      "@mitay/ui/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,61 @@
+# =============================================================
+# mitay-frontend — .gitignore único del monorepo
+# Los patrones sin "/" inicial aplican en TODAS las carpetas
+# (apps/* y packages/*), por eso no hace falta un .gitignore por app.
+# =============================================================
+
+# --- Dependencias ---
+node_modules/
+.pnpm-store/
+.pnp
+.pnp.*
+
+# --- Variables de entorno (secretos) ---
+# Se ignoran todos los .env; solo se sube la plantilla .env.example
+.env
+.env.*
+!.env.example
+
+# --- Builds y caché ---
+.next/
+out/
+build/
+dist/
+.turbo/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+
+# --- Tests ---
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# --- Logs ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# --- Certificados y llaves ---
+*.pem
+*.key
+
+# --- Sistema operativo ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editores ---
+# Se comparte la configuración recomendada de VS Code, no la personal
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+
+# --- Claude Code (configuración personal) ---
+.claude/settings.local.json

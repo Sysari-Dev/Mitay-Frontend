@@ -1,0 +1,4 @@
+{
+  "extends": "@mitay/config/tsconfig/library.json",
+  "include": ["src"]
+}

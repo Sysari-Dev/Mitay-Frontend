@@ -1,0 +1,19 @@
+{
+  "name": "@mitay/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Lógica de negocio de MITAY por módulos (hexagonal ligera). Sin React, DOM ni Next: reutilizable por Expo.",
+  "type": "module",
+  "exports": {
+    "./shared-kernel": "./src/shared-kernel/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@mitay/config": "workspace:*",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
