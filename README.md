@@ -10,7 +10,8 @@ Frontend de **MITAY** (Sysari): catálogo hiperlocal de restaurantes en Abancay 
 
 - Arquitectura y reglas: [AGENTS.md](AGENTS.md) (**léelo antes de programar**)
 - Decisiones técnicas: [Monorepo](docs/adr/0001-monorepo.md) · [Hexagonal](docs/adr/0002-hexagonal.md) · [UI atómica](docs/adr/0003-ui-atomic.md) · [Contrato](docs/adr/0004-contract.md)
-- Funcionalidades (SDD): [specs](specs/README.md)
+- Hoja de ruta y tareas (SDD): [specs](specs/README.md)
+- Guías: [arquitectura](docs/guides/architecture.md) · [UI](docs/guides/ui.md)
 
 ### Reglas básicas
 
@@ -98,7 +99,8 @@ Turborepo guarda caché: si nada cambió, `build`/`test` terminan en segundos.
 ```
 apps/        → lo que se despliega (web, erp, admin) — Next.js
 packages/    → librerías internas @mitay/* (core, ui, utils, api-client, config)
-specs/       → especificaciones por requerimiento (REST-01, CAT-03…)
+specs/       → hoja de ruta y una tarea por requerimiento (REST-01, CAT-03…)
+docs/guides/ → guías de arquitectura y UI
 docs/adr/    → decisiones de arquitectura
 ```
 

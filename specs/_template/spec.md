@@ -1,28 +1,33 @@
-# <CODIGO>: <Nombre de la funcionalidad>
+# CODE-00 · Título de la tarea
 
-- **Estado:** Borrador
-- **Módulo:** restaurant | catalog | orders | identity | notifications | administration
-- **App(s):** web | erp | admin
-- **Requerimiento origen:** <CODIGO> — <descripción del documento de requerimientos>
+| Estado | Apps | Módulo | Fase | Depende de |
+|---|---|---|---|---|
+| ⬜ Pendiente | erp | catalog | 2 · Restaurante operativo | FND-04 |
 
-## Problema / por qué
-¿Qué dolor del usuario o del negocio resuelve?
+## Objetivo
 
-## Usuarios
-¿Quién lo usa? (rol: público, restaurant, admin)
+Qué problema resuelve y para quién, en dos o tres líneas.
 
-## Historias de usuario
-- Como <rol>, quiero <acción>, para <beneficio>.
+## Rutas y pantallas
+
+- `/route` → `SomethingView`
 
 ## Criterios de aceptación
-- [ ] Dado <contexto>, cuando <acción>, entonces <resultado>.
-- [ ] ...
 
-## Reglas de negocio
-- Regla 1 (irá a `domain/`).
+- [ ] Comportamiento verificable 1
+- [ ] Comportamiento verificable 2
+
+## Cómo
+
+- Reglas de dominio en `packages/core/src/<module>/domain` (nombres de funciones).
+- Componentes o librerías relevantes.
+
+## Contrato API (propuesto, acordar con backend)
+
+| Método | Ruta | Uso |
+|---|---|---|
+| GET | `/resource` | Para qué sirve |
 
 ## Fuera de alcance
-- Lo que explícitamente NO se hace en esta versión.
 
-## Preguntas abiertas
-- ¿...? (responsable: backend / mobile / negocio)
+- Lo que explícitamente no se hace en esta tarea.
