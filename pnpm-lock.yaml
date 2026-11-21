@@ -411,6 +411,9 @@ importers:
       '@types/react':
         specifier: 'catalog:'
         version: 19.3.0
+      next:
+        specifier: 'catalog:'
+        version: 16.4.6(@babel/core@7.29.13(supports-color@7.2.0))(@types/node@24.19.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       react:
         specifier: 'catalog:'
         version: 19.3.0

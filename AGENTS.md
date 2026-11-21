@@ -237,7 +237,18 @@ Paleta **"Rocoto + Chicha"**, inspirada en la cocina peruana. El coral despierta
 - `destructive` es un carmesí más oscuro que `primary` para que un error nunca se confunda con un CTA.
 - Antes de usar un color de un cliente de Sysari como base de MITAY, revisar que no se parezca a su identidad.
 
-### 4.5 Tokens y temas
+### 4.5 Tipografía
+
+| Utilidad | Fuente | Uso |
+|---|---|---|
+| `font-heading` | **Nunito** | Títulos (`h1`–`h4` la usan automáticamente) y logotipo. Redondeada, amigable y cercana |
+| `font-sans` | **Figtree** | Todo el texto e interfaz (por defecto en `body`). Legible en tamaños chicos y en tablas |
+| `font-mono` | **Geist Mono** | Códigos, tokens, IDs |
+
+- Las fuentes se definen **una sola vez** en `packages/ui/src/lib/fonts.ts` (`next/font/google`) y cada `layout.tsx` solo aplica `fontVariables` en `<html>`.
+- Para cambiar la tipografía de todo el sistema, se edita solo `fonts.ts`. No importar `next/font` en las apps.
+
+### 4.6 Tokens y temas
 
 Definidos en `packages/ui/src/styles/globals.css`: valores claros en `:root`, oscuros en `.dark`. Cada color tiene su pareja `-foreground` para el texto encima.
 
@@ -257,7 +268,7 @@ Definidos en `packages/ui/src/styles/globals.css`: valores claros en `:root`, os
 - `@mitay/ui/organisms/theme-preview`: muestra todos los tokens (útil para revisar la paleta).
 - Un color nuevo se agrega en **tres lugares**: `:root`, `.dark` y `@theme inline`.
 
-### 4.6 Agregar componentes de shadcn/ui
+### 4.7 Agregar componentes de shadcn/ui
 
 ```bash
 cd packages/ui
