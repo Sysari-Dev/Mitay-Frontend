@@ -1,6 +1,7 @@
 'use client'
 
-import { BRAND_IMAGE_ACCEPTED_TYPES, BRAND_IMAGE_MAX_BYTES, formatMegabytes } from '@mitay/core/restaurant'
+import { BRAND_IMAGE_ACCEPTED_TYPES, BRAND_IMAGE_MAX_BYTES } from '@mitay/core/restaurant'
+import { formatMegabytes } from '@mitay/core/shared-kernel'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@mitay/ui/atoms/card'
 import { Skeleton } from '@mitay/ui/atoms/skeleton'
 import { ImageDropzone } from '@mitay/ui/organisms/image-dropzone'

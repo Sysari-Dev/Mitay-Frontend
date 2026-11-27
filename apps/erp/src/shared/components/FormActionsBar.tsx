@@ -6,19 +6,21 @@ type FormActionsBarProps = {
   isDirty: boolean
   isSubmitting: boolean
   submitLabel?: string
+  idleMessage?: string
 } & ({ cancelHref: string; onDiscard?: never } | { onDiscard: () => void; cancelHref?: never })
 
 export function FormActionsBar({
   isDirty,
   isSubmitting,
   submitLabel = 'Guardar cambios',
+  idleMessage = 'No hay cambios por guardar',
   cancelHref,
   onDiscard,
 }: FormActionsBarProps) {
   return (
     <div className="bg-background/95 border-border sticky bottom-0 z-10 -mx-4 flex flex-col gap-3 border-t px-4 py-3 backdrop-blur sm:mx-0 sm:flex-row sm:items-center sm:justify-between sm:rounded-xl sm:border sm:px-5">
       <p aria-live="polite" className="text-muted-foreground text-sm">
-        {isDirty ? 'Tienes cambios sin guardar' : 'No hay cambios por guardar'}
+        {isDirty ? 'Tienes cambios sin guardar' : idleMessage}
       </p>
       <div className="flex gap-3">
         {cancelHref ? (

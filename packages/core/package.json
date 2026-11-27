@@ -6,7 +6,8 @@
   "type": "module",
   "exports": {
     "./shared-kernel": "./src/shared-kernel/index.ts",
-    "./restaurant": "./src/restaurant/index.ts"
+    "./restaurant": "./src/restaurant/index.ts",
+    "./catalog": "./src/catalog/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

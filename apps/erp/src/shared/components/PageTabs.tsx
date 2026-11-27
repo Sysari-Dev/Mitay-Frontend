@@ -17,7 +17,7 @@ type PageTabsProps = {
 export function PageTabs({ tabs, label }: PageTabsProps) {
   const pathname = usePathname()
   return (
-    <nav aria-label={label} className="border-border -mx-4 overflow-x-auto overflow-y-hidden border-b px-4 [scrollbar-width:none] sm:mx-0 sm:px-0">
+    <nav aria-label={label} className="border-border -mx-4 overflow-x-auto overflow-y-hidden border-b px-4 scrollbar-none sm:mx-0 sm:px-0">
       <ul className="flex gap-1">
         {tabs.map((tab) => {
           const isActive = pathname === tab.href

@@ -8,7 +8,7 @@ import { EmptyState } from '@mitay/ui/molecules/empty-state'
 import { usePreviewState } from '@/shared/hooks/usePreviewState'
 import { RestaurantDeliveryBody } from '@/modules/restaurant/presentation/restaurant-delivery/RestaurantDeliveryBody'
 import { useRestaurantCoverageForm } from '@/modules/restaurant/presentation/restaurant-delivery/hooks/useRestaurantCoverageForm'
-import { FormActionsBar } from '@/modules/restaurant/presentation/shared/components/FormActionsBar'
+import { FormActionsBar } from '@/shared/components/FormActionsBar'
 
 export function RestaurantDeliveryContent() {
   const status = usePreviewState()

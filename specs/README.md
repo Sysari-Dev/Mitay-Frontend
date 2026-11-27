@@ -2,7 +2,7 @@
 
 Fuente única del **estado del proyecto**. Al iniciar una sesión, leer este archivo y luego solo el spec de la tarea a trabajar.
 
-Progreso: **2 hechas**, **2 con UI lista**, **2 en esqueleto**, **29 pendientes** de 35.
+Progreso: **2 hechas**, **4 con UI lista**, **2 en esqueleto**, **27 pendientes** de 35.
 
 Leyenda: ✅ Hecho · 🔵 UI lista (maquetada con datos de ejemplo, falta conectar la API) · 🟡 Esqueleto / en progreso · ⬜ Pendiente
 
@@ -58,8 +58,8 @@ Este repo implementa la parte **web** del documento de requerimientos:
 | [REST-02](REST-02-branding/spec.md) | Personalización de marca | erp | 🔵 UI lista | REST-01, FND-03 |
 | [REST-03](REST-03-availability/spec.md) | Disponibilidad operativa | erp | ⬜ Pendiente | REST-01, FND-04 |
 | [REST-04](REST-04-location-coverage/spec.md) | Ubicación y radio de reparto | erp | 🔵 UI lista | REST-01 |
-| [CAT-01](CAT-01-categories-dishes/spec.md) | Gestión de categorías y platos | erp | ⬜ Pendiente | FND-03, FND-04 |
-| [CAT-02](CAT-02-dish-availability/spec.md) | Control de inventario rápido | erp | ⬜ Pendiente | CAT-01 |
+| [CAT-01](CAT-01-categories-dishes/spec.md) | Gestión de categorías y platos | erp | 🔵 UI lista | FND-03, FND-04 |
+| [CAT-02](CAT-02-dish-availability/spec.md) | Control de inventario rápido | erp | 🔵 UI lista | CAT-01 |
 | [ADM-02](ADM-02-cities/spec.md) | Gestión de ciudades operativas | admin | ⬜ Pendiente | FND-04, AUTH-03 |
 
 ## Fase 3 · Operación en vivo, administración y directorio

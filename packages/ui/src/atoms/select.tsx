@@ -35,6 +35,7 @@ function Select({
   className,
   ...triggerProps
 }: SelectProps) {
+  const selectedLabel = value === undefined ? undefined : options.find((option) => option.value === value)?.label
   return (
     <SelectPrimitive.Root
       value={value}
@@ -56,7 +57,7 @@ function Select({
         {...triggerProps}
       >
         <span className="truncate">
-          <SelectPrimitive.Value placeholder={placeholder} />
+          <SelectPrimitive.Value placeholder={placeholder}>{selectedLabel}</SelectPrimitive.Value>
         </span>
         <SelectPrimitive.Icon asChild>
           <ChevronDown

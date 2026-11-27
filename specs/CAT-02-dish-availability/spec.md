@@ -2,7 +2,7 @@
 
 | Estado | Apps | Módulo | Fase | Depende de |
 |---|---|---|---|---|
-| ⬜ Pendiente | erp | catalog | 2 · Restaurante operativo | CAT-01 |
+| 🔵 UI lista | erp | catalog | 2 · Restaurante operativo | CAT-01 |
 
 ## Objetivo
 
@@ -14,9 +14,9 @@ Marcar un plato como agotado o disponible en un toque, en tiempo real.
 
 ## Criterios de aceptación
 
-- [ ] Interruptor por plato con actualización optimista
-- [ ] Filtro "Agotados"
-- [ ] Acción masiva: reactivar todos al inicio del día
+- [x] Interruptor por plato con actualización optimista (estado local; con API, mutación de TanStack Query)
+- [x] Filtro "Agotados" (selector de estado con conteo)
+- [x] Acción masiva: aviso "Tienes N platos agotados" con "Reactivar todos" y confirmación
 
 ## Cómo
 

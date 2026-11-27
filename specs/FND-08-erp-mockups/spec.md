@@ -73,6 +73,8 @@ Elementos globales en la topbar del shell (FND-04): interruptor abierto/cerrado 
 - [x] Bloque 3 · Horario (`/restaurant/schedule`): `Switch` (botón `role="switch"` propio), `Checkbox` y `Popover` (Radix) en `@mitay/ui`; `FormActionsBar` compartida en `restaurant/presentation/shared`.
 - [x] Bloque 4 · Marca (`/restaurant/branding`): `ImageDropzone` en `@mitay/ui/organisms`, reglas de imagen y contraste en `@mitay/core/restaurant`, tarjeta "Así te verán" con logo, portada y `--brand-primary` (también en Perfil y Horario).
 - [x] Bloque 5 · Cobertura (`/restaurant/delivery`): `MapPicker` (Leaflet + OSM, carga solo en cliente con skeleton), radio con círculo, "Usar mi ubicación" y resumen de distritos alcanzados (`isWithinDeliveryRadius`).
+- [x] Bloque 6 · Mi carta (`/catalog`): búsqueda, filtros por estado y categoría, interruptor agotado/disponible, "Reactivar todos", diálogo de categorías (crear, renombrar, ↑↓, eliminar) y confirmaciones. Nuevos en `@mitay/ui`: `Dialog`, `ConfirmDialog`, `DropdownMenu`. Dominio en `@mitay/core/catalog`.
+- [x] Bloque 7 · Formulario del plato (`/catalog/dishes/new` y `/catalog/dishes/[id]`). `FormActionsBar` sube a `apps/erp/src/shared/components` y la previsualización local de imágenes a `apps/erp/src/shared/hooks/useLocalImageField` (los usan `restaurant` y `catalog`).
 - [ ] Pendiente para alta fidelidad: contador de pedidos en la navegación (NOT-01) y `sheet` de FND-03 para el menú móvil.
 
 ## Fuera de alcance

@@ -23,10 +23,8 @@ export {
 export {
   BRAND_IMAGE_ACCEPTED_TYPES,
   BRAND_IMAGE_MAX_BYTES,
-  formatMegabytes,
   validateBrandImage,
   type BrandImageKind,
-  type ImageFileInfo,
 } from './domain/brandImage'
 export { restaurantBrandingSchema, type RestaurantBrandingFormValues } from './domain/restaurantBrandingSchema'
 export {

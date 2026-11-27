@@ -5,7 +5,7 @@ import { useRestaurantProfileForm } from '@/modules/restaurant/presentation/rest
 import { BusinessInfoFieldsSection } from '@/modules/restaurant/presentation/restaurant-profile-edit/sections/BusinessInfoFieldsSection'
 import { LocationFieldsSection } from '@/modules/restaurant/presentation/restaurant-profile-edit/sections/LocationFieldsSection'
 import { OrderContactFieldsSection } from '@/modules/restaurant/presentation/restaurant-profile-edit/sections/OrderContactFieldsSection'
-import { FormActionsBar } from '@/modules/restaurant/presentation/shared/components/FormActionsBar'
+import { FormActionsBar } from '@/shared/components/FormActionsBar'
 
 export function RestaurantProfileEditContent() {
   const { form, onSubmit } = useRestaurantProfileForm()
