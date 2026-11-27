@@ -5,7 +5,8 @@
   "description": "Lógica de negocio de MITAY por módulos (hexagonal ligera). Sin React, DOM ni Next: reutilizable por Expo.",
   "type": "module",
   "exports": {
-    "./shared-kernel": "./src/shared-kernel/index.ts"
+    "./shared-kernel": "./src/shared-kernel/index.ts",
+    "./restaurant": "./src/restaurant/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -15,5 +16,9 @@
     "@mitay/config": "workspace:*",
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "dependencies": {
+    "@mitay/utils": "workspace:*",
+    "zod": "catalog:"
   }
 }

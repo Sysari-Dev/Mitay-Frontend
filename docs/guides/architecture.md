@@ -55,12 +55,23 @@ packages/core/src/catalog/
 ├─ infrastructure/  Adaptadores: repositorio HTTP (usa @mitay/api-client), mappers DTO → dominio.
 └─ index.ts         API pública del módulo.
 
-apps/erp/src/modules/catalog/presentation/
-├─ views/           Pantalla completa (CatalogView). Compone sections.
-├─ sections/        Bloques de la pantalla (CatalogHeaderSection, PdfImportSection).
-├─ components/      Piezas de negocio del módulo (DishCard, AvailabilityToggle).
-└─ hooks/           Hooks del módulo (useDishes, useToggleDish) con TanStack Query.
+apps/erp/src/modules/restaurant/presentation/
+├─ restaurant-profile/                 Una carpeta por pantalla (ADR-0010).
+│  ├─ RestaurantProfileView.tsx        Server Component: Suspense y composición.
+│  ├─ RestaurantProfileContent.tsx     Cliente: decide estado (vacío, error o Body con/sin datos).
+│  ├─ RestaurantProfileBody.tsx        Compone las sections; sin datos dibuja su propio skeleton (fallback de Suspense).
+│  ├─ sections/                        Bloques visibles (BusinessInfoSection). No importan otras sections.
+│  ├─ components/                      Piezas de esta pantalla (ProfileField).
+│  └─ hooks/                           Hooks de esta pantalla (useRestaurantProfile).
+├─ restaurant-schedule/ …
+└─ shared/                             Lo que usan 2+ pantallas del módulo.
+   ├─ components/                      RestaurantPageLayout, RestaurantPreviewCard.
+   └─ fixtures/                        Datos de ejemplo mientras no hay API.
 ```
+
+Nombre de la carpeta: kebab-case de la View sin "View" (`CatalogView` → `catalog`). Una pieza sube de nivel solo cuando se comparte: pantalla → `presentation/shared` (2+ pantallas) → `apps/<app>/src/shared` (2+ módulos) → `packages/ui` o `packages/utils` (2+ apps). Sin `index.ts` de reexportación en apps.
+
+**Carga sin skeletons duplicados:** las sections y components reciben datos opcionales; sin datos muestran lo que no depende de la API (títulos, etiquetas, ayudas) y un `Skeleton` solo donde va cada valor. No se dibuja un skeleton aparte de la página.
 
 **Ligera:** misma estructura en todos los módulos, profundidad variable. `restaurant`, `catalog` y `orders` tienen dominio rico; `administration` y `notifications` pueden ser solo tipos. Sin abstracciones sin motivo.
 

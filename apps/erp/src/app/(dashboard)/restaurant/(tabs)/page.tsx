@@ -1,4 +1,4 @@
-import { RestaurantProfileView } from '@/modules/restaurant/presentation/views/RestaurantProfileView'
+import { RestaurantProfileView } from '@/modules/restaurant/presentation/restaurant-profile/RestaurantProfileView'
 
 export const metadata = { title: 'Mi restaurante' }
 

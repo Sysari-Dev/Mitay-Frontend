@@ -26,7 +26,7 @@ Que un restaurante cree su cuenta e ingrese al ERP con correo y contraseña, y q
 
 - `core/identity/domain`: `isStrongPassword`, tipos `Role` (`client`, `restaurant`, `admin`), `Credentials`.
 - `core/identity/application`: `login`, `register` + puerto `AuthRepository`.
-- UI: `LoginForm`, `RegisterForm` en `presentation/sections`.
+- UI: `LoginForm`, `RegisterForm` en `presentation/login/sections` y `presentation/register/sections`.
 
 ## Contrato API (propuesto, acordar con backend)
 

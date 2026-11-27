@@ -18,6 +18,7 @@ type SidebarProps = {
   navigation: SidebarNavGroup[]
   headerAction?: ReactNode
   footer?: ReactNode
+  isCollapsed?: boolean
   onNavigate?: () => void
   className?: string
 }
@@ -34,9 +35,12 @@ function SidebarNavGroups({ groups, pathname }: { groups: SidebarNavGroup[]; pat
       {groups.map((group, index) => (
         <div key={group.label ?? index} className="flex flex-col gap-1">
           {group.label && (
-            <p className="text-sidebar-foreground/60 px-3 pb-1 text-xs font-semibold tracking-wide uppercase">
-              {group.label}
-            </p>
+            <>
+              <p className="text-sidebar-foreground/60 px-3 pb-1 text-xs font-semibold tracking-wide uppercase group-data-[state=collapsed]/sidebar:hidden">
+                {group.label}
+              </p>
+              <div aria-hidden className="bg-sidebar-border mx-auto mb-1 hidden h-px w-8 group-data-[state=collapsed]/sidebar:block" />
+            </>
           )}
           <ul className="flex flex-col gap-1">
             {group.items.map((item) => (
@@ -56,16 +60,33 @@ function ActiveSidebarNavGroups({ groups }: { groups: SidebarNavGroup[] }) {
   return <SidebarNavGroups groups={groups} pathname={pathname} />
 }
 
-function Sidebar({ brand, navigation, headerAction, footer, onNavigate, className }: SidebarProps) {
+function Sidebar({
+  brand,
+  navigation,
+  headerAction,
+  footer,
+  isCollapsed = false,
+  onNavigate,
+  className,
+}: SidebarProps) {
   function handleClick(event: MouseEvent<HTMLElement>) {
     if (onNavigate && (event.target as HTMLElement).closest('a')) onNavigate()
   }
 
   return (
-    <div className={cn('bg-sidebar text-sidebar-foreground flex h-full flex-col', className)}>
-      <div className="flex h-16 shrink-0 items-center justify-between gap-2 px-5">
-        {brand}
-        {headerAction}
+    <div
+      data-state={isCollapsed ? 'collapsed' : 'expanded'}
+      className={cn('group/sidebar bg-sidebar text-sidebar-foreground flex h-full flex-col', className)}
+    >
+      <div className="group/header relative flex h-16 shrink-0 items-center justify-between gap-2 pr-3 pl-5 group-data-[state=collapsed]/sidebar:justify-center group-data-[state=collapsed]/sidebar:px-0">
+        <div className="min-w-0 transition-opacity group-data-[state=collapsed]/sidebar:group-focus-within/header:opacity-0 group-data-[state=collapsed]/sidebar:group-hover/header:opacity-0">
+          {brand}
+        </div>
+        {headerAction && (
+          <div className="shrink-0 transition-opacity group-data-[state=collapsed]/sidebar:absolute group-data-[state=collapsed]/sidebar:inset-0 group-data-[state=collapsed]/sidebar:flex group-data-[state=collapsed]/sidebar:items-center group-data-[state=collapsed]/sidebar:justify-center group-data-[state=collapsed]/sidebar:opacity-0 group-data-[state=collapsed]/sidebar:group-focus-within/header:opacity-100 group-data-[state=collapsed]/sidebar:group-hover/header:opacity-100">
+            {headerAction}
+          </div>
+        )}
       </div>
       <nav aria-label="Navegación principal" onClick={handleClick} className="flex-1 overflow-y-auto px-3 py-4">
         <Suspense fallback={<SidebarNavGroups groups={navigation} pathname={null} />}>

@@ -6,15 +6,15 @@ Léela cuando toques componentes, estilos, colores, tipografía o temas. Decisi�
 
 ```
 app/(group)/route/page.tsx  → ruta de Next: params, metadata, permisos. Renderiza UNA View.
-  └─ View                   → modules/<module>/presentation/views
-      └─ Sections           → modules/<module>/presentation/sections
-          └─ Components     → modules/<module>/presentation/components (negocio)
+  └─ View                   → modules/<module>/presentation/<screen>/<Screen>View.tsx
+      └─ Sections           → modules/<module>/presentation/<screen>/sections
+          └─ Components     → modules/<module>/presentation/<screen>/components (negocio; si lo usan 2+ pantallas, presentation/shared)
               └─ @mitay/ui  → atoms / molecules / organisms (genéricos)
 layout.tsx                  → renderiza el layout de la app (p. ej. ErpLayout en shared/components), que arma un template de @mitay/ui
 ```
 
 ```tsx
-import { CatalogView } from '@/modules/catalog/presentation/views/CatalogView'
+import { CatalogView } from '@/modules/catalog/presentation/catalog/CatalogView'
 
 export const metadata = { title: 'Mi carta' }
 
@@ -27,13 +27,13 @@ export default function Page() {
 
 | Nivel | Existe hoy | Ejemplos futuros |
 |---|---|---|
-| `atoms/` | `button`, `badge` | input, avatar, switch |
-| `molecules/` | `theme-toggle`, `sidebar-nav-item` | form-field, search-bar, price-tag |
+| `atoms/` | `button`, `badge`, `card`, `skeleton`, `input`, `textarea`, `select`, `label` | avatar, switch, checkbox |
+| `molecules/` | `theme-toggle`, `sidebar-nav-item`, `app-brand`, `empty-state`, `form-field`, `password-input` | search-bar, price-tag |
 | `organisms/` | `theme-preview`, `sidebar`, `topbar` | data-table, file-dropzone, map-picker |
 | `templates/` | `dashboard-template` | marketing-template |
 | `lib/` | `utils` (`cn`), `theme`, `fonts` | — |
 
-Componentes con vocabulario de negocio (DishCard, ScheduleEditor, LiveOrderToast) van en `presentation/` del módulo, nunca en `packages/ui`.
+Componentes con vocabulario de negocio (DishCard, ScheduleEditor, LiveOrderToast) van en `presentation/<screen>/components` del módulo (o `presentation/shared` si los usan varias pantallas), nunca en `packages/ui`. Estructura completa en [ADR-0010](../adr/0010-presentation-by-screen.md).
 
 ## 3. Estilos
 
@@ -109,7 +109,35 @@ En `packages/ui/src/styles/globals.css`: claros en `:root`, oscuros en `.dark`. 
 <Button variant="ghost" color="neutral" size="icon-lg" aria-label="Cerrar menú"><X /></Button>
 ```
 
-## 8. Agregar componentes de shadcn/ui
+## 8. Formularios
+
+Librería: **React Hook Form + Zod** (`@hookform/resolvers/zod`). Formik no: re-renderiza todo el formulario y está casi sin mantenimiento.
+
+**Validación (antes de enviar al backend):**
+
+- Reglas por campo una sola vez en `@mitay/core/shared-kernel` (`validation.ts`): `emailSchema`, `personNameSchema`, `rucSchema`, `peruvianMobileSchema`, `optionalPhoneSchema`, `addressSchema`, `requiredTextSchema`, `optionalTextSchema`. Mensajes en español, con tests.
+- Esquema de cada formulario en el dominio del módulo (`@mitay/core/restaurant` → `restaurantProfileSchema`), armado con esas reglas. Sirve igual para erp, admin y Expo.
+- `useForm<Input, unknown, Output>({ resolver: zodResolver(schema), mode: onTouched })`: valida al salir del campo y luego mientras se corrige; al enviar enfoca el primer campo inválido.
+
+**UI (`@mitay/ui`, sin dependencia de React Hook Form):**
+
+| Pieza | Uso |
+|---|---|
+| `Input` | Texto; `startAddon` / `endAddon` para prefijos (`+51`) o botones. |
+| `Textarea`, `Label` | Controles base. |
+| `Select` | Lista propia sobre Radix Select (teclado, lector de pantalla, posición automática). Es controlado: con React Hook Form se usa con `Controller`. Opciones con `description` opcional. |
+| `PasswordInput` | Contraseña con botón mostrar/ocultar. |
+| `FormField` | Etiqueta + control + mensaje (error > éxito > ayuda) + contador + "Opcional". Conecta `id`, `aria-invalid` y `aria-describedby` por render prop. |
+
+Estados visuales comunes (`lib/field-styles.ts`): borde gris fino en reposo, más oscuro al pasar el cursor, `primary` con halo suave al enfocar (200 ms), `destructive` con error (`aria-invalid`) y `success` con mensaje de éxito (`data-success`; no usar `data-state`, que lo ocupa Radix).
+
+```tsx
+<FormField label="RUC" error={errors.ruc?.message} success={rucSuccess}>
+  {(control) => <Input {...control} {...register(ruc)} inputMode="numeric" maxLength={11} />}
+</FormField>
+```
+
+## 9. Agregar componentes de shadcn/ui
 
 ```bash
 cd packages/ui

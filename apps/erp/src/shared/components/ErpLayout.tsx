@@ -28,23 +28,15 @@ const erpNavigation: SidebarNavGroup[] = [
   },
 ]
 
-function ErpBrand({ isCompact = false }: { isCompact?: boolean }) {
-  return (
-    <Link href="/" className="flex items-center gap-2 rounded-md">
-      <span className="font-heading text-primary text-xl font-extrabold tracking-tight">MITAY</span>
-      {!isCompact && <span className="bg-secondary/10 text-secondary rounded-md px-2 py-0.5 text-xs font-semibold">Restaurantes</span>}
-    </Link>
-  )
-}
-
 function RestaurantCard() {
   return (
     <Link
       href="/restaurant"
-      className="hover:bg-sidebar-foreground/5 focus-visible:ring-sidebar-ring flex items-center gap-3 rounded-lg p-2 transition-colors outline-none focus-visible:ring-2"
+      title="Ver mi restaurante"
+      className="hover:bg-sidebar-foreground/5 focus-visible:ring-sidebar-ring flex items-center gap-3 rounded-lg p-2 transition-colors outline-none focus-visible:ring-2 group-data-[state=collapsed]/sidebar:justify-center group-data-[state=collapsed]/sidebar:px-0"
     >
       <LayoutPlaceholder label="" className="size-10 shrink-0 rounded-full" />
-      <div className="flex min-w-0 flex-col">
+      <div className="flex min-w-0 flex-col group-data-[state=collapsed]/sidebar:sr-only">
         <span className="truncate text-sm font-semibold">Tu restaurante</span>
         <span className="text-sidebar-foreground/60 truncate text-xs">Ver mi restaurante</span>
       </div>
@@ -68,8 +60,7 @@ function TopbarActions() {
 export function ErpLayout({ children }: { children: ReactNode }) {
   return (
     <DashboardTemplate
-      brand={<ErpBrand />}
-      mobileBrand={<ErpBrand isCompact />}
+      brand={{ title: 'MITAY', subtitle: 'Restaurantes', href: '/' }}
       navigation={erpNavigation}
       sidebarFooter={<RestaurantCard />}
       topbarActions={<TopbarActions />}

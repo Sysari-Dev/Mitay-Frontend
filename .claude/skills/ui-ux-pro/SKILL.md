@@ -105,6 +105,6 @@ Toda vista o sección que dependa de datos cubre los cinco:
 - [ ] Solo tokens de color; contraste AA en claro y oscuro.
 - [ ] Navegable con teclado, foco visible, labels y `alt` presentes.
 - [ ] Espaciado en la escala de 4 px, sin valores arbitrarios.
-- [ ] Componentes genéricos en `@mitay/ui`, los de negocio en `presentation/`.
+- [ ] Componentes genéricos en `@mitay/ui`; los de negocio en `presentation/<screen>/` o `presentation/shared/` del módulo (ADR-0010).
 - [ ] Reglas de `AGENTS.md`: sin comentarios, JSX sin líneas en blanco, nombres en inglés, textos en español.
 - [ ] Si Playwright MCP está disponible: captura en móvil y escritorio para revisar el resultado real.

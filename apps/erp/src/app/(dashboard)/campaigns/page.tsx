@@ -1,4 +1,4 @@
-import { CampaignsView } from '@/modules/campaigns/presentation/views/CampaignsView'
+import { CampaignsView } from '@/modules/campaigns/presentation/campaigns/CampaignsView'
 
 export const metadata = { title: 'Campañas' }
 

@@ -27,7 +27,7 @@ Página principal que convence al comensal de descargar la app y al restaurante 
 
 - Server Components con caché/revalidación por hora para las cifras.
 - Variables: `NEXT_PUBLIC_APP_STORE_URL`, `NEXT_PUBLIC_PLAY_STORE_URL`.
-- Sections en `apps/web/src/modules/marketing/presentation/sections/`.
+- Sections en `apps/web/src/modules/marketing/presentation/landing/sections/`.
 
 ## Contrato API (propuesto, acordar con backend)
 

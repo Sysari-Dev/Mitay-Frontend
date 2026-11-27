@@ -46,7 +46,7 @@ Elementos globales en la topbar del shell (FND-04): interruptor abierto/cerrado 
 ## Criterios de aceptación
 
 - [ ] Todas las rutas de la tabla existen y renderizan su View; `/login`, `/register`, `/forgot-password` y `/reset-password` fuera del grupo `(dashboard)`, el resto dentro.
-- [ ] Datos de ejemplo realistas de Abancay (platos, precios en céntimos mostrados con `formatPEN`, horarios, pedidos) en `apps/erp/src/modules/<module>/presentation/fixtures/`.
+- [ ] Datos de ejemplo realistas de Abancay (platos, precios en céntimos mostrados con `formatPEN`, horarios, pedidos) en `apps/erp/src/modules/<module>/presentation/shared/fixtures/`.
 - [ ] Cada vista con datos muestra sus estados de carga (skeleton), vacío, error y éxito; se pueden previsualizar con el parámetro `?state=loading|empty|error` solo en desarrollo.
 - [ ] Formularios con validación visual (errores por campo, botón con estado "Guardando…") sin envío real.
 - [ ] Interacciones locales simuladas: interruptor abierto/cerrado, marcar plato agotado, ver detalle de una intención de pedido, silenciar el sonido de avisos, pasos del importador y del onboarding.
@@ -57,9 +57,9 @@ Elementos globales en la topbar del shell (FND-04): interruptor abierto/cerrado 
 
 ## Cómo
 
-- Jerarquía `page.tsx → View → Sections → Components → @mitay/ui`; los componentes de negocio (DishCard, OrderCard, ScheduleEditor, OpenStatusSwitch…) en `presentation/components` del módulo.
+- Jerarquía `page.tsx → View → Sections → Components → @mitay/ui`; estructura por pantalla de [ADR-0010](../../docs/adr/0010-presentation-by-screen.md): componentes de negocio (DishCard, OrderCard, ScheduleEditor, OpenStatusSwitch…) en `presentation/<screen>/components`, o en `presentation/shared` si los usan varias pantallas.
 - Los fixtures se tipan con tipos locales de `presentation`, con nombres y forma pensados para coincidir con los futuros tipos de `@mitay/core`, de modo que conectar datos reales sea solo cambiar la fuente.
-- Estado local con `useState` en hooks de `presentation/hooks`; sin llamadas de red, sin `@mitay/api-client` ni lógica en `core`.
+- Estado local con `useState` en los hooks de cada pantalla (`presentation/<screen>/hooks`); sin llamadas de red, sin `@mitay/api-client` ni lógica en `core`.
 - Se maqueta por bloques, en este orden sugerido: acceso → shell y dashboard → carta → pedidos y avisos → configuración y onboarding → campañas → importador.
 - Validar cada bloque con capturas de Playwright en móvil y escritorio.
 
@@ -67,7 +67,10 @@ Elementos globales en la topbar del shell (FND-04): interruptor abierto/cerrado 
 
 - [x] Bloque 0 · Layout de baja fidelidad: `DashboardTemplate` en `@mitay/ui/templates` compuesto por `Sidebar` y `Topbar` (organisms) y `SidebarNavItem` (molecule), con sidebar fija en escritorio y menú lateral en móvil; `ErpLayout` con la navegación del ERP y rutas `/`, `/orders`, `/catalog`, `/campaigns`, `/restaurant`, `/account` con un contenedor de marcador por página.
 - [x] Iconos de navegación con `lucide-react` (catalog, en `packages/ui` y las tres apps).
-- [ ] Pendiente para alta fidelidad: contador de pedidos en la navegación (NOT-01), sidebar colapsable y `sheet` de FND-03/FND-04.
+- [x] Marca `AppBrand` (logo, nombre y app) y sidebar colapsable en escritorio con `useSidebarCollapsed` (se recuerda en `localStorage`): botón de panel junto a la marca; encogido, el logo se cambia por el botón al pasar el cursor; atajo `Ctrl + B`.
+- [x] Bloque 1 · Mi restaurante: layout con pestañas (`PageTabs`) y pestaña Perfil completa; Horario, Marca y Cobertura como marcadores. Nuevos en `@mitay/ui`: `card`, `skeleton`, `empty-state`; en `@mitay/utils`: `formatPeruvianPhone`, `toWhatsAppUrl`; hook `usePreviewState` para `?state=`.
+- [x] Bloque 2 · Edición del perfil (`/restaurant/edit`): kit de formularios en `@mitay/ui` (`input`, `textarea`, `select`, `label`, `form-field`, `password-input`), validaciones estándar en `@mitay/core/shared-kernel` y esquema `restaurantProfileSchema`. Dependencias nuevas (catalog): `react-hook-form`, `zod`, `@hookform/resolvers`, ya previstas en FND-03.
+- [ ] Pendiente para alta fidelidad: contador de pedidos en la navegación (NOT-01) y `sheet` de FND-03 para el menú móvil.
 
 ## Fuera de alcance
 

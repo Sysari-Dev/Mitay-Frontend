@@ -1,4 +1,4 @@
-import { AccountView } from '@/modules/identity/presentation/views/AccountView'
+import { AccountView } from '@/modules/identity/presentation/account/AccountView'
 
 export const metadata = { title: 'Mi cuenta' }
 

@@ -1,4 +1,4 @@
-import { CatalogView } from '@/modules/catalog/presentation/views/CatalogView'
+import { CatalogView } from '@/modules/catalog/presentation/catalog/CatalogView'
 
 export const metadata = { title: 'Mi carta' }
 

@@ -2,9 +2,11 @@
 
 Fuente única del **estado del proyecto**. Al iniciar una sesión, leer este archivo y luego solo el spec de la tarea a trabajar.
 
-Progreso: **2 hechas**, **2 en esqueleto**, **31 pendientes** de 35.
+Progreso: **2 hechas**, **0 con UI lista**, **2 en esqueleto**, **31 pendientes** de 35.
 
-Leyenda: ✅ Hecho · 🟡 Esqueleto / en progreso · ⬜ Pendiente
+Leyenda: ✅ Hecho · 🔵 UI lista (maquetada con datos de ejemplo, falta conectar la API) · 🟡 Esqueleto / en progreso · ⬜ Pendiente
+
+Una tarea pasa a 🔵 cuando su pantalla está maquetada en FND-08 y aprobada; pasa a ✅ solo cuando funciona con el backend real.
 
 ## Alcance
 

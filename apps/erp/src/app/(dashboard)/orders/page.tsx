@@ -1,4 +1,4 @@
-import { OrdersView } from '@/modules/orders/presentation/views/OrdersView'
+import { OrdersView } from '@/modules/orders/presentation/orders/OrdersView'
 
 export const metadata = { title: 'Pedidos' }
 

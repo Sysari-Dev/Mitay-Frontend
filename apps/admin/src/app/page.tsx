@@ -1,4 +1,4 @@
-import { DashboardView } from '@/modules/administration/presentation/views/DashboardView'
+import { DashboardView } from '@/modules/administration/presentation/dashboard/DashboardView'
 
 export default function Page() {
   return <DashboardView />

@@ -39,9 +39,9 @@ Nunca líneas en blanco dentro del JSX (entre etiquetas hermanas o dentro de un 
 
 ### 0.4 Arquitectura
 
-- Hexagonal ligera: lógica en `packages/core/src/<module>/{domain,application,infrastructure}`, interfaz en `apps/<app>/src/modules/<module>/presentation/{views,sections,components,hooks}`.
+- Hexagonal ligera: lógica en `packages/core/src/<module>/{domain,application,infrastructure}`, interfaz en `apps/<app>/src/modules/<module>/presentation/<screen>/{sections,components,hooks}` + `presentation/shared/` ([ADR-0010](docs/adr/0010-presentation-by-screen.md)).
 - `presentation → application → domain`; `domain` es puro; `core` y `utils` sin React/DOM/Next; `ui` sin negocio; `app/` sin lógica.
-- `page.tsx` solo renderiza una View. Jerarquía: View → Sections → Components → `@mitay/ui`.
+- `page.tsx` solo renderiza una View. Jerarquía: View → Sections → Components → `@mitay/ui`. Solo la View decide estados; una section no importa otra section.
 - Solo tokens de color (la paleta de Tailwind está desactivada). Tema claro por defecto.
 - Sin dependencias nuevas sin anotarlas en el spec o un ADR. Versiones en el catalog (`"catalog:"`).
 
@@ -77,7 +77,8 @@ docs/adr/                decisiones de arquitectura
 |---|---|
 | Regla de negocio | `packages/core/src/<module>/domain` (+ test Vitest al lado) |
 | Llamada al backend | `packages/core/src/<module>/infrastructure` vía `@mitay/api-client` |
-| Hook de negocio | `apps/<app>/src/modules/<module>/presentation/hooks` |
+| Pantalla (View, sections, components, hooks) | `apps/<app>/src/modules/<module>/presentation/<screen>/` |
+| Pieza usada por 2+ pantallas de un módulo | `apps/<app>/src/modules/<module>/presentation/shared/` |
 | Hook o componente genérico de 1 app | `apps/<app>/src/shared/{hooks,components}` |
 | Providers | `apps/<app>/src/shared/providers` |
 | Componente visual genérico (≥2 apps) | `packages/ui` |
