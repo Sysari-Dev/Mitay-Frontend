@@ -12,7 +12,7 @@ Recuperar el acceso por correo y cambiar la contraseña con la sesión activa.
 
 - `/forgot-password` → `ForgotPasswordView`
 - `/reset-password?token=` → `ResetPasswordView`
-- `/settings/security` → `SecuritySettingsView`
+- `/account` → `AccountView` (Mi cuenta: correo y cambio de contraseña)
 
 ## Criterios de aceptación
 

@@ -18,7 +18,7 @@ Estructura de navegación de los paneles: barra lateral, barra superior y conten
 - [ ] `DashboardTemplate` en `@mitay/ui/templates` (sidebar colapsable, topbar, área de contenido)
 - [ ] En móvil la navegación se abre como `sheet`; en escritorio sidebar fija
 - [ ] Topbar con espacio para: interruptor abierto/cerrado (REST-03), campana (NOT-02), menú de usuario, ThemeToggle
-- [ ] Navegación del ERP: Inicio, Mi carta, Campañas, Pedidos, Configuración
+- [ ] Navegación del ERP: Inicio · Mi negocio (Mi restaurante, Mi carta, Campañas) · Ventas (Pedidos) · Cuenta (Mi cuenta)
 - [ ] Navegación del Admin: Inicio, Restaurantes, Usuarios, Ciudades, Planes y banners, Conversiones, Auditoría, Avisos
 - [ ] Estado activo de la ruta actual y títulos por página
 

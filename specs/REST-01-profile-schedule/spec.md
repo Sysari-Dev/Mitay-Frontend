@@ -10,8 +10,8 @@ Que el restaurante registre sus datos legales, su WhatsApp de pedidos y su horar
 
 ## Rutas y pantallas
 
-- `/settings/profile` → `ProfileSettingsView`
-- `/settings/schedule` → `ScheduleSettingsView`
+- `/restaurant` → `RestaurantProfileView` (Mi restaurante, pestaña Perfil)
+- `/restaurant/schedule` → `RestaurantScheduleView` (pestaña Horario)
 - `/onboarding` → asistente que reutiliza ambas secciones
 
 ## Criterios de aceptación

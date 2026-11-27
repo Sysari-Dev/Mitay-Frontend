@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import { BookOpen, House, Megaphone, ReceiptText, Settings } from 'lucide-react'
+import { BookOpen, CircleUserRound, House, Megaphone, ReceiptText, Store } from 'lucide-react'
 import { ThemeToggle } from '@mitay/ui/molecules/theme-toggle'
 import { type SidebarNavGroup } from '@mitay/ui/organisms/sidebar'
 import { DashboardTemplate } from '@mitay/ui/templates/dashboard-template'
@@ -8,22 +8,23 @@ import { LayoutPlaceholder } from '@/shared/components/LayoutPlaceholder'
 
 const erpNavigation: SidebarNavGroup[] = [
   {
-    label: 'Operación',
-    items: [
-      { href: '/', label: 'Inicio', icon: <House /> },
-      { href: '/orders', label: 'Pedidos', icon: <ReceiptText /> },
-    ],
+    items: [{ href: '/', label: 'Inicio', icon: <House /> }],
   },
   {
     label: 'Mi negocio',
     items: [
+      { href: '/restaurant', label: 'Mi restaurante', icon: <Store /> },
       { href: '/catalog', label: 'Mi carta', icon: <BookOpen /> },
       { href: '/campaigns', label: 'Campañas', icon: <Megaphone /> },
     ],
   },
   {
+    label: 'Ventas',
+    items: [{ href: '/orders', label: 'Pedidos', icon: <ReceiptText /> }],
+  },
+  {
     label: 'Cuenta',
-    items: [{ href: '/settings', label: 'Configuración', icon: <Settings /> }],
+    items: [{ href: '/account', label: 'Mi cuenta', icon: <CircleUserRound /> }],
   },
 ]
 
@@ -38,13 +39,16 @@ function ErpBrand({ isCompact = false }: { isCompact?: boolean }) {
 
 function RestaurantCard() {
   return (
-    <div className="flex items-center gap-3 rounded-lg p-2">
+    <Link
+      href="/restaurant"
+      className="hover:bg-sidebar-foreground/5 focus-visible:ring-sidebar-ring flex items-center gap-3 rounded-lg p-2 transition-colors outline-none focus-visible:ring-2"
+    >
       <LayoutPlaceholder label="" className="size-10 shrink-0 rounded-full" />
       <div className="flex min-w-0 flex-col">
         <span className="truncate text-sm font-semibold">Tu restaurante</span>
-        <span className="text-sidebar-foreground/60 truncate text-xs">Perfil y plan</span>
+        <span className="text-sidebar-foreground/60 truncate text-xs">Ver mi restaurante</span>
       </div>
-    </div>
+    </Link>
   )
 }
 

@@ -10,7 +10,7 @@ Registrar la ubicación del local, su ciudad, el radio máximo de reparto y las 
 
 ## Rutas y pantallas
 
-- `/settings/delivery` → `DeliverySettingsView`
+- `/restaurant/delivery` → `RestaurantDeliveryView` (Mi restaurante, pestaña Cobertura)
 
 ## Criterios de aceptación
 

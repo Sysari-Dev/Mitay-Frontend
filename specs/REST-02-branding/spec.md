@@ -10,7 +10,7 @@ Que cada restaurante suba su logo y portada y defina sus colores y eslogan para 
 
 ## Rutas y pantallas
 
-- `/settings/branding` → `BrandingSettingsView`
+- `/restaurant/branding` → `RestaurantBrandingView` (Mi restaurante, pestaña Marca)
 
 ## Criterios de aceptación
 

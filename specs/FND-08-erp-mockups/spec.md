@@ -10,6 +10,16 @@ Maquetar **solo la interfaz** de todas las pantallas del ERP con datos de ejempl
 
 ## Rutas y pantallas
 
+Navegación (sin "Configuración": el MVP solo muestra lo que funciona):
+
+| Grupo | Items |
+|---|---|
+| — | Inicio |
+| Mi negocio | Mi restaurante (perfil, horario, marca, cobertura), Mi carta, Campañas |
+| Ventas | Pedidos (intenciones de pedido, NOT-01) |
+| Cuenta | Mi cuenta (correo y contraseña) |
+
+
 | Ruta | View | Módulo | Spec funcional que la conectará |
 |---|---|---|---|
 | `/login` | `LoginView` | identity | AUTH-01, AUTH-02 |
@@ -25,11 +35,11 @@ Maquetar **solo la interfaz** de todas las pantallas del ERP con datos de ejempl
 | `/campaigns/new`, `/campaigns/[id]` | `CampaignFormView` | catalog | CAT-05 |
 | `/orders` | `OrdersView` (en vivo + historial) | notifications | NOT-01 |
 | `/notifications` | `NotificationsView` | notifications | NOT-02 |
-| `/settings/profile` | `ProfileSettingsView` | restaurant | REST-01 |
-| `/settings/schedule` | `ScheduleSettingsView` | restaurant | REST-01 |
-| `/settings/branding` | `BrandingSettingsView` | restaurant | REST-02 |
-| `/settings/delivery` | `DeliverySettingsView` | restaurant | REST-04 |
-| `/settings/security` | `SecuritySettingsView` | identity | AUTH-04 |
+| `/restaurant` | `RestaurantProfileView` (pestaña Perfil) | restaurant | REST-01 |
+| `/restaurant/schedule` | `RestaurantScheduleView` (pestaña Horario) | restaurant | REST-01 |
+| `/restaurant/branding` | `RestaurantBrandingView` (pestaña Marca) | restaurant | REST-02 |
+| `/restaurant/delivery` | `RestaurantDeliveryView` (pestaña Cobertura) | restaurant | REST-04 |
+| `/account` | `AccountView` (Mi cuenta) | identity | AUTH-04 |
 
 Elementos globales en la topbar del shell (FND-04): interruptor abierto/cerrado (REST-03), campana de avisos (NOT-02) y aviso de pedido en vivo (NOT-01).
 
@@ -55,7 +65,7 @@ Elementos globales en la topbar del shell (FND-04): interruptor abierto/cerrado 
 
 ## Avance
 
-- [x] Bloque 0 · Layout de baja fidelidad: `DashboardTemplate` en `@mitay/ui/templates` compuesto por `Sidebar` y `Topbar` (organisms) y `SidebarNavItem` (molecule), con sidebar fija en escritorio y menú lateral en móvil; `ErpLayout` con la navegación del ERP y rutas `/`, `/orders`, `/catalog`, `/campaigns`, `/settings` con un contenedor de marcador por página.
+- [x] Bloque 0 · Layout de baja fidelidad: `DashboardTemplate` en `@mitay/ui/templates` compuesto por `Sidebar` y `Topbar` (organisms) y `SidebarNavItem` (molecule), con sidebar fija en escritorio y menú lateral en móvil; `ErpLayout` con la navegación del ERP y rutas `/`, `/orders`, `/catalog`, `/campaigns`, `/restaurant`, `/account` con un contenedor de marcador por página.
 - [x] Iconos de navegación con `lucide-react` (catalog, en `packages/ui` y las tres apps).
 - [ ] Pendiente para alta fidelidad: contador de pedidos en la navegación (NOT-01), sidebar colapsable y `sheet` de FND-03/FND-04.
 
