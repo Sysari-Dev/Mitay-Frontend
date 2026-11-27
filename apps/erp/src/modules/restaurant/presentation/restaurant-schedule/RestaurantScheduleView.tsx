@@ -1,5 +1,11 @@
-import { LayoutPlaceholder } from '@/shared/components/LayoutPlaceholder'
+import { Suspense } from 'react'
+import { RestaurantScheduleBody } from '@/modules/restaurant/presentation/restaurant-schedule/RestaurantScheduleBody'
+import { RestaurantScheduleContent } from '@/modules/restaurant/presentation/restaurant-schedule/RestaurantScheduleContent'
 
 export function RestaurantScheduleView() {
-  return <LayoutPlaceholder label="Horario semanal (REST-01)" className="min-h-80" />
+  return (
+    <Suspense fallback={<RestaurantScheduleBody isLoading />}>
+      <RestaurantScheduleContent />
+    </Suspense>
+  )
 }

@@ -27,7 +27,7 @@ export default function Page() {
 
 | Nivel | Existe hoy | Ejemplos futuros |
 |---|---|---|
-| `atoms/` | `button`, `badge`, `card`, `skeleton`, `input`, `textarea`, `select`, `label` | avatar, switch, checkbox |
+| `atoms/` | `button`, `badge`, `card`, `skeleton`, `input`, `textarea`, `select`, `label`, `switch`, `checkbox`, `popover` | avatar, tooltip |
 | `molecules/` | `theme-toggle`, `sidebar-nav-item`, `app-brand`, `empty-state`, `form-field`, `password-input` | search-bar, price-tag |
 | `organisms/` | `theme-preview`, `sidebar`, `topbar` | data-table, file-dropzone, map-picker |
 | `templates/` | `dashboard-template` | marketing-template |
@@ -127,6 +127,8 @@ Librería: **React Hook Form + Zod** (`@hookform/resolvers/zod`). Formik no: re-
 | `Textarea`, `Label` | Controles base. |
 | `Select` | Lista propia sobre Radix Select (teclado, lector de pantalla, posición automática). Es controlado: con React Hook Form se usa con `Controller`. Opciones con `description` opcional. |
 | `PasswordInput` | Contraseña con botón mostrar/ocultar. |
+| `Switch` | Interruptor (`role="switch"`), controlado con `checked` / `onCheckedChange`. Propio, sin Radix: el input oculto de Radix genera avisos de hidratación dentro de formularios. |
+| `Checkbox`, `Popover` | Sobre Radix; el popover usa la animación `animate-popover-in`. |
 | `FormField` | Etiqueta + control + mensaje (error > éxito > ayuda) + contador + "Opcional". Conecta `id`, `aria-invalid` y `aria-describedby` por render prop. |
 
 Estados visuales comunes (`lib/field-styles.ts`): borde gris fino en reposo, más oscuro al pasar el cursor, `primary` con halo suave al enfocar (200 ms), `destructive` con error (`aria-invalid`) y `success` con mensaje de éxito (`data-success`; no usar `data-state`, que lo ocupa Radix).

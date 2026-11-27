@@ -10,7 +10,7 @@ Tener los componentes genéricos que necesitan todos los formularios, tablas y p
 
 ## Criterios de aceptación
 
-- [ ] Átomos: input, textarea, label, select, checkbox, switch, avatar, skeleton, separator, tooltip (hechos: input, textarea, label, select, skeleton, card)
+- [ ] Átomos: input, textarea, label, select, checkbox, switch, avatar, skeleton, separator, tooltip (hechos: input, textarea, label, select, skeleton, card, switch, checkbox, popover)
 - [ ] Moléculas: form-field (label + control + error con React Hook Form), search-bar, price-tag, status-pill, empty-state (hechos: form-field, empty-state, password-input)
 - [ ] Organismos: dialog/confirm-dialog, sheet, dropdown-menu, tabs, data-table (orden, paginación), toaster, file-dropzone
 - [ ] Todo usa solo tokens, funciona en claro/oscuro y es accesible con teclado

@@ -1,11 +1,11 @@
 'use client'
 
 import { FormProvider } from 'react-hook-form'
-import { ProfileFormActions } from '@/modules/restaurant/presentation/restaurant-profile-edit/components/ProfileFormActions'
 import { useRestaurantProfileForm } from '@/modules/restaurant/presentation/restaurant-profile-edit/hooks/useRestaurantProfileForm'
 import { BusinessInfoFieldsSection } from '@/modules/restaurant/presentation/restaurant-profile-edit/sections/BusinessInfoFieldsSection'
 import { LocationFieldsSection } from '@/modules/restaurant/presentation/restaurant-profile-edit/sections/LocationFieldsSection'
 import { OrderContactFieldsSection } from '@/modules/restaurant/presentation/restaurant-profile-edit/sections/OrderContactFieldsSection'
+import { FormActionsBar } from '@/modules/restaurant/presentation/shared/components/FormActionsBar'
 
 export function RestaurantProfileEditContent() {
   const { form, onSubmit } = useRestaurantProfileForm()
@@ -16,7 +16,7 @@ export function RestaurantProfileEditContent() {
         <BusinessInfoFieldsSection />
         <OrderContactFieldsSection />
         <LocationFieldsSection />
-        <ProfileFormActions isDirty={isDirty} isSubmitting={isSubmitting} />
+        <FormActionsBar isDirty={isDirty} isSubmitting={isSubmitting} cancelHref="/restaurant" />
       </form>
     </FormProvider>
   )

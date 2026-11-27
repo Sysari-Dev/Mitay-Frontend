@@ -31,7 +31,7 @@ export function ProfileField({
         ) : isEmpty ? (
           <span className="text-muted-foreground text-sm italic">Sin registrar</span>
         ) : (
-          <span className={cn('text-sm font-medium break-words', isMonospace && 'font-mono tracking-tight')}>{value}</span>
+          <span className={cn('text-sm font-medium wrap-break-words', isMonospace && 'font-mono tracking-tight')}>{value}</span>
         )}
         {!isLoading && action}
       </dd>

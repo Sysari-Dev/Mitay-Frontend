@@ -11,13 +11,13 @@ export const PERU_UTC_OFFSET_MINUTES = -300
 
 const MINUTES_PER_DAY = 24 * 60
 
-function toMinutes(hhmm: string): number {
+export function timeToMinutes(hhmm: string): number {
   const [hours = 0, minutes = 0] = hhmm.split(':').map(Number)
   return hours * 60 + minutes
 }
 
-function crossesMidnight(range: OpeningRange): boolean {
-  return toMinutes(range.closes) <= toMinutes(range.opens)
+export function crossesMidnight(range: OpeningRange): boolean {
+  return timeToMinutes(range.closes) <= timeToMinutes(range.opens)
 }
 
 export function isOpenNow(
@@ -31,13 +31,13 @@ export function isOpenNow(
   const minuteOfDay = local.getUTCHours() * 60 + local.getUTCMinutes()
 
   const openToday = schedule[today].some((range) => {
-    const opens = toMinutes(range.opens)
-    const closes = crossesMidnight(range) ? MINUTES_PER_DAY : toMinutes(range.closes)
+    const opens = timeToMinutes(range.opens)
+    const closes = crossesMidnight(range) ? MINUTES_PER_DAY : timeToMinutes(range.closes)
     return minuteOfDay >= opens && minuteOfDay < closes
   })
 
   const stillOpenFromYesterday = schedule[yesterday].some(
-    (range) => crossesMidnight(range) && minuteOfDay < toMinutes(range.closes),
+    (range) => crossesMidnight(range) && minuteOfDay < timeToMinutes(range.closes),
   )
 
   return openToday || stillOpenFromYesterday

@@ -70,6 +70,7 @@ Elementos globales en la topbar del shell (FND-04): interruptor abierto/cerrado 
 - [x] Marca `AppBrand` (logo, nombre y app) y sidebar colapsable en escritorio con `useSidebarCollapsed` (se recuerda en `localStorage`): botón de panel junto a la marca; encogido, el logo se cambia por el botón al pasar el cursor; atajo `Ctrl + B`.
 - [x] Bloque 1 · Mi restaurante: layout con pestañas (`PageTabs`) y pestaña Perfil completa; Horario, Marca y Cobertura como marcadores. Nuevos en `@mitay/ui`: `card`, `skeleton`, `empty-state`; en `@mitay/utils`: `formatPeruvianPhone`, `toWhatsAppUrl`; hook `usePreviewState` para `?state=`.
 - [x] Bloque 2 · Edición del perfil (`/restaurant/edit`): kit de formularios en `@mitay/ui` (`input`, `textarea`, `select`, `label`, `form-field`, `password-input`), validaciones estándar en `@mitay/core/shared-kernel` y esquema `restaurantProfileSchema`. Dependencias nuevas (catalog): `react-hook-form`, `zod`, `@hookform/resolvers`, ya previstas en FND-03.
+- [x] Bloque 3 · Horario (`/restaurant/schedule`): `Switch` (botón `role="switch"` propio), `Checkbox` y `Popover` (Radix) en `@mitay/ui`; `FormActionsBar` compartida en `restaurant/presentation/shared`.
 - [ ] Pendiente para alta fidelidad: contador de pedidos en la navegación (NOT-01) y `sheet` de FND-03 para el menú móvil.
 
 ## Fuera de alcance
