@@ -8,6 +8,7 @@ Un ADR registra **una decisión** que afecta a más de un módulo o app: context
 | [0002](0002-hexagonal.md) | Hexagonal | Aceptado (estructura de `presentation` reemplazada por 0010) |
 | [0003](0003-ui-atomic.md) | UI atómica | Aceptado (estructura de `presentation` reemplazada por 0010) |
 | [0004](0004-contract.md) | Contrato | Aceptado |
+| [0007](0007-maps.md) | Mapas en web con Leaflet y OpenStreetMap | Aceptado |
 | [0010](0010-presentation-by-screen.md) | `presentation` organizada por pantalla | Aceptado |
 
 Para una decisión nueva, copia [`0000-template.md`](0000-template.md) con el siguiente número libre y un nombre corto en inglés. Los números 0005–0009 están reservados para las decisiones pendientes con backend (ver `specs/README.md`).

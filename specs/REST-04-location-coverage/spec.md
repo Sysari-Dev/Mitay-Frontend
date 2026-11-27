@@ -1,12 +1,12 @@
-# REST-04 · Ubicación y cobertura de envío
+# REST-04 · Ubicación y radio de reparto
 
 | Estado | Apps | Módulo | Fase | Depende de |
 |---|---|---|---|---|
-| ⬜ Pendiente | erp | restaurant | 2 · Restaurante operativo | REST-01, ADM-02 |
+| 🔵 UI lista | erp | restaurant | 2 · Restaurante operativo | REST-01 |
 
 ## Objetivo
 
-Registrar la ubicación del local, su ciudad, el radio máximo de reparto y las tarifas referenciales por distancia.
+Que el restaurante fije el punto exacto de su local y su radio máximo de reparto, para que la app avise al cliente cuando su dirección queda fuera de cobertura ("Este local no llega a tu dirección"). **No define cobros**: las tarifas de envío (por tramos o por zona) quedan para una fase futura con motorizados.
 
 ## Rutas y pantallas
 
@@ -14,20 +14,30 @@ Registrar la ubicación del local, su ciudad, el radio máximo de reparto y las 
 
 ## Criterios de aceptación
 
-- [ ] Mapa para fijar el punto del local (arrastrar marcador o usar ubicación actual)
-- [ ] Selector de ciudad base (ciudades activas de ADM-02)
-- [ ] Radio máximo en km con círculo visible en el mapa
-- [ ] Tarifas por tramos de distancia (ej. 0–2 km S/ 3, 2–4 km S/ 5) sin huecos ni superposición
+- [x] Mapa para fijar el punto del local: arrastrar el pin, tocar el mapa o "Usar mi ubicación" (geolocalización con mensajes si se niega el permiso)
+- [x] Campos Latitud y Longitud sincronizados con el pin (alternativa sin arrastrar; es lo único que se guarda junto al radio)
+- [x] Radio máximo en km (0,5 a 20, por defecto 5) con círculo visible en el mapa
+- [x] Resumen "Hasta dónde llegas": distritos de la provincia dentro y fuera del radio, con su distancia
+- [x] Estados de carga (skeleton por sección), error y responsive (360 px → escritorio)
+- [ ] Conectar `PUT /restaurants/me/location`
 
 ## Cómo
 
-- Decisión pendiente `docs/adr/0007-maps.md` (recomendado: MapLibre/Leaflet con OpenStreetMap, sin costo).
-- Mapa genérico `map-picker` en `@mitay/ui/organisms` (también lo usa ADM-02).
-- `core/restaurant/domain`: `deliveryFeeFor(distanceKm, zones)`, `validateDeliveryZones`.
+- Mapa: `MapPicker` en `@mitay/ui/organisms` con Leaflet + OpenStreetMap ([ADR-0007](../../docs/adr/0007-maps.md)); también lo usará ADM-02.
+- `core/restaurant/domain`: `restaurantCoverageSchema`, `isWithinDeliveryRadius(origin, radiusKm, destination)` (usa `distanceKm` del shared-kernel). ORD-03 reutiliza esta regla en la app móvil.
+- La dirección y el distrito se editan en Perfil (`/restaurant/edit`); esta pestaña no los repite.
+- "Hasta dónde llegas" usa los distritos de la provincia del local con su centro (`geo.DISTRICT.center_lat` / `center_lng`). Hoy salen de `districtOptionsFixture` (coordenadas aproximadas); con API vendrán del endpoint de distritos, con la misma forma `{ id, name, center: { lat, lng } }`.
+- `MapPicker` remonta el lienzo de Leaflet cuando Next oculta la ruta con `<Activity>` (Cache Components): Leaflet destruye su mapa al ocultarse y no puede reutilizarlo.
 
 ## Contrato API (propuesto, acordar con backend)
 
 | Método | Ruta | Uso |
 |---|---|---|
-| GET | `/cities` | Ciudades activas |
-| PUT | `/restaurants/me/location` | Ubicación, ciudad, radio y tarifas |
+| GET | `/restaurants/me/location` | `latitude`, `longitude`, `maxDeliveryRadiusKm` actuales |
+| PUT | `/restaurants/me/location` | Guarda `latitude`, `longitude`, `maxDeliveryRadiusKm` |
+| GET | `/geo/districts?provinceId={id}` | Distritos activos de la provincia con `centerLat` y `centerLng` (también lo usan Perfil y ADM-02) |
+
+## Fuera de alcance
+
+- Tarifas de envío por tramos o por zona (`partner.DELIVERY_ZONE_RATE`): fase futura con motorizados.
+- Selector de ciudad: el distrito ya se define en Perfil.

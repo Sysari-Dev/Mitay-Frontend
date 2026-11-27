@@ -1,4 +1,4 @@
-import type { WeeklySchedule } from '@mitay/core/shared-kernel'
+import type { GeoPoint, WeeklySchedule } from '@mitay/core/shared-kernel'
 
 export type RestaurantProfile = {
   id: string
@@ -15,6 +15,8 @@ export type RestaurantProfile = {
     name: string
     provinceName: string
   }
+  location: GeoPoint
+  maxDeliveryRadiusKm: number
   logoUrl: string | null
   bannerUrl: string | null
   brandColor: string
@@ -48,6 +50,8 @@ export const restaurantProfileFixture: RestaurantProfile = {
     name: 'Abancay',
     provinceName: 'Abancay',
   },
+  location: { lat: -13.63458, lng: -72.88124 },
+  maxDeliveryRadiusKm: 5,
   logoUrl: null,
   bannerUrl: null,
   brandColor: BRICK_BRAND_COLOR,

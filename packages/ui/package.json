@@ -19,15 +19,18 @@
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",
+    "leaflet": "catalog:",
     "lucide-react": "catalog:",
-    "radix-ui": "^1.8.1"
+    "radix-ui": "^1.8.1",
+    "react-leaflet": "catalog:"
   },
   "devDependencies": {
     "@mitay/config": "workspace:*",
+    "@types/leaflet": "catalog:",
     "@types/react": "catalog:",
+    "next": "catalog:",
     "react": "catalog:",
-    "typescript": "catalog:",
-    "next": "catalog:"
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "react": "^19",

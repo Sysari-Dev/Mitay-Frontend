@@ -1,5 +1,11 @@
-import { LayoutPlaceholder } from '@/shared/components/LayoutPlaceholder'
+import { Suspense } from 'react'
+import { RestaurantDeliveryBody } from '@/modules/restaurant/presentation/restaurant-delivery/RestaurantDeliveryBody'
+import { RestaurantDeliveryContent } from '@/modules/restaurant/presentation/restaurant-delivery/RestaurantDeliveryContent'
 
 export function RestaurantDeliveryView() {
-  return <LayoutPlaceholder label="Ubicación y cobertura de envío (REST-04)" className="min-h-80" />
+  return (
+    <Suspense fallback={<RestaurantDeliveryBody isLoading />}>
+      <RestaurantDeliveryContent />
+    </Suspense>
+  )
 }

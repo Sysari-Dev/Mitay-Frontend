@@ -29,3 +29,12 @@ export {
   type ImageFileInfo,
 } from './domain/brandImage'
 export { restaurantBrandingSchema, type RestaurantBrandingFormValues } from './domain/restaurantBrandingSchema'
+export {
+  DEFAULT_DELIVERY_RADIUS_KM,
+  DELIVERY_RADIUS_MAX_KM,
+  DELIVERY_RADIUS_MIN_KM,
+  DELIVERY_RADIUS_STEP_KM,
+  isWithinDeliveryRadius,
+  restaurantCoverageSchema,
+  type RestaurantCoverageFormValues,
+} from './domain/deliveryCoverage'
