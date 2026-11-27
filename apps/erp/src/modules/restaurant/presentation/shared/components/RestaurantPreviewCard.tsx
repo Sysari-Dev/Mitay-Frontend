@@ -1,6 +1,9 @@
 'use client'
 
+import type { CSSProperties } from 'react'
+import Image from 'next/image'
 import { MapPin } from 'lucide-react'
+import { getBrandColorContrast } from '@mitay/core/restaurant'
 import { isOpenNow } from '@mitay/core/shared-kernel'
 import { Card } from '@mitay/ui/atoms/card'
 import { Skeleton } from '@mitay/ui/atoms/skeleton'
@@ -29,10 +32,17 @@ function getInitials(name: string) {
     .join('')
 }
 
+function getBrandStyle(brandColor: string): CSSProperties | undefined {
+  const contrast = getBrandColorContrast(brandColor)
+  if (!contrast) return undefined
+  const brandVariables = { '--brand-primary': brandColor, '--brand-primary-foreground': contrast.foreground }
+  return brandVariables as CSSProperties
+}
+
 function RestaurantPreviewCardSkeleton() {
   return (
     <Card aria-hidden className="overflow-hidden">
-      <Skeleton className="h-20 rounded-none" />
+      <Skeleton className="h-24 rounded-none" />
       <div className="flex flex-col gap-3 px-5 pb-5">
         <Skeleton className="border-card -mt-8 size-16 rounded-2xl border-4" />
         <div className="flex flex-col gap-2">
@@ -49,11 +59,19 @@ export function RestaurantPreviewCard({ profile }: { profile?: RestaurantProfile
   if (!profile) return <RestaurantPreviewCardSkeleton />
   const status = getOpenStatus(profile)
   return (
-    <Card className="overflow-hidden">
-      <div className="bg-primary/10 h-20" />
+    <Card style={getBrandStyle(profile.brandColor)} className="overflow-hidden">
+      <div className="bg-brand/15 relative h-24">
+        {profile.bannerUrl && (
+          <Image src={profile.bannerUrl} alt="" fill unoptimized sizes="320px" className="object-cover" />
+        )}
+      </div>
       <div className="flex flex-col gap-3 px-5 pb-5">
-        <div className="bg-primary text-primary-foreground border-card font-heading -mt-8 flex size-16 items-center justify-center rounded-2xl border-4 text-xl font-extrabold">
-          {getInitials(profile.tradeName)}
+        <div className="bg-brand text-brand-foreground border-card font-heading relative -mt-8 flex size-16 items-center justify-center overflow-hidden rounded-2xl border-4 text-xl font-extrabold">
+          {profile.logoUrl ? (
+            <Image src={profile.logoUrl} alt={`Logo de ${profile.tradeName}`} fill unoptimized sizes="64px" className="object-cover" />
+          ) : (
+            getInitials(profile.tradeName)
+          )}
         </div>
         <div className="flex flex-col gap-0.5">
           <h3 className="text-lg leading-snug font-bold">{profile.tradeName}</h3>

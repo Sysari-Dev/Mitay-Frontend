@@ -1,5 +1,11 @@
-import { LayoutPlaceholder } from '@/shared/components/LayoutPlaceholder'
+import { Suspense } from 'react'
+import { RestaurantBrandingBody } from '@/modules/restaurant/presentation/restaurant-branding/RestaurantBrandingBody'
+import { RestaurantBrandingContent } from '@/modules/restaurant/presentation/restaurant-branding/RestaurantBrandingContent'
 
 export function RestaurantBrandingView() {
-  return <LayoutPlaceholder label="Logo, portada y colores (REST-02)" className="min-h-80" />
+  return (
+    <Suspense fallback={<RestaurantBrandingBody isLoading />}>
+      <RestaurantBrandingContent />
+    </Suspense>
+  )
 }

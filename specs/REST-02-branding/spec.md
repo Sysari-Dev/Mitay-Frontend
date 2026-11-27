@@ -2,7 +2,7 @@
 
 | Estado | Apps | Módulo | Fase | Depende de |
 |---|---|---|---|---|
-| ⬜ Pendiente | erp | restaurant | 2 · Restaurante operativo | REST-01, FND-03 |
+| 🔵 UI lista | erp | restaurant | 2 · Restaurante operativo | REST-01, FND-03 |
 
 ## Objetivo
 
@@ -14,15 +14,16 @@ Que cada restaurante suba su logo y portada y defina sus colores y eslogan para 
 
 ## Criterios de aceptación
 
-- [ ] Subida de logo (cuadrado) y portada (16:9) con vista previa, formatos JPG/PNG/WebP y límite de tamaño
-- [ ] Selector de color de marca con aviso si el contraste con el texto es insuficiente
-- [ ] Eslogan con límite de caracteres
-- [ ] Vista previa de la tarjeta del restaurante como se verá en la app, aplicando `--brand-primary`
+- [x] Subida de logo (cuadrado, máx. 2 MB) y portada (16:9, máx. 5 MB) con vista previa, formatos JPG/PNG/WebP — UI con previsualización local; la subida real espera ADR 0006
+- [x] Selector de color de marca (9 sugeridos + personalizado) con aviso si el contraste con el texto es insuficiente (`getBrandColorContrast`, WCAG ≥ 4.5)
+- [x] Eslogan con límite de caracteres — **se edita en Perfil** (`/restaurant/edit`) para no duplicar el campo (decisión de producto)
+- [x] Vista previa de la tarjeta del restaurante como se verá en la app, aplicando `--brand-primary` (en vivo)
 
 ## Cómo
 
 - Decisión pendiente `docs/adr/0006-uploads.md`: subida directa con URL firmada vs vía backend.
-- `core/restaurant/domain`: `hasReadableContrast(color)`.
+- `core/restaurant/domain`: `getBrandColorContrast(color)`, `validateBrandImage(file, kind)`, `restaurantBrandingSchema`.
+- UI: `ImageDropzone` (`@mitay/ui/organisms`); pantalla en `presentation/restaurant-branding/`.
 
 ## Contrato API (propuesto, acordar con backend)
 

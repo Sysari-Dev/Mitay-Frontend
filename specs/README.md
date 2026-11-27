@@ -2,7 +2,7 @@
 
 Fuente única del **estado del proyecto**. Al iniciar una sesión, leer este archivo y luego solo el spec de la tarea a trabajar.
 
-Progreso: **2 hechas**, **0 con UI lista**, **2 en esqueleto**, **31 pendientes** de 35.
+Progreso: **2 hechas**, **1 con UI lista**, **2 en esqueleto**, **30 pendientes** de 35.
 
 Leyenda: ✅ Hecho · 🔵 UI lista (maquetada con datos de ejemplo, falta conectar la API) · 🟡 Esqueleto / en progreso · ⬜ Pendiente
 
@@ -55,7 +55,7 @@ Este repo implementa la parte **web** del documento de requerimientos:
 | Código | Tarea | Apps | Estado | Depende de |
 |---|---|---|---|---|
 | [REST-01](REST-01-profile-schedule/spec.md) | Perfil corporativo y horarios | erp | ⬜ Pendiente | FND-04, AUTH-03 |
-| [REST-02](REST-02-branding/spec.md) | Personalización de marca | erp | ⬜ Pendiente | REST-01, FND-03 |
+| [REST-02](REST-02-branding/spec.md) | Personalización de marca | erp | 🔵 UI lista | REST-01, FND-03 |
 | [REST-03](REST-03-availability/spec.md) | Disponibilidad operativa | erp | ⬜ Pendiente | REST-01, FND-04 |
 | [REST-04](REST-04-location-coverage/spec.md) | Ubicación y cobertura de envío | erp | ⬜ Pendiente | REST-01, ADM-02 |
 | [CAT-01](CAT-01-categories-dishes/spec.md) | Gestión de categorías y platos | erp | ⬜ Pendiente | FND-03, FND-04 |

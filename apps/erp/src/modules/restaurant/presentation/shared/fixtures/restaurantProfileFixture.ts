@@ -17,6 +17,7 @@ export type RestaurantProfile = {
   }
   logoUrl: string | null
   bannerUrl: string | null
+  brandColor: string
   isOpenManual: boolean
   isActive: boolean
   schedule: WeeklySchedule
@@ -24,6 +25,8 @@ export type RestaurantProfile = {
 }
 
 const ABANCAY_DISTRICT_ID = 'district-030101'
+
+const BRICK_BRAND_COLOR = '#c2410c'
 
 const lunchAndDinner = [
   { opens: '11:00', closes: '16:00' },
@@ -47,6 +50,7 @@ export const restaurantProfileFixture: RestaurantProfile = {
   },
   logoUrl: null,
   bannerUrl: null,
+  brandColor: BRICK_BRAND_COLOR,
   isOpenManual: true,
   isActive: true,
   schedule: {

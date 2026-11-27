@@ -29,7 +29,7 @@ export default function Page() {
 |---|---|---|
 | `atoms/` | `button`, `badge`, `card`, `skeleton`, `input`, `textarea`, `select`, `label`, `switch`, `checkbox`, `popover` | avatar, tooltip |
 | `molecules/` | `theme-toggle`, `sidebar-nav-item`, `app-brand`, `empty-state`, `form-field`, `password-input` | search-bar, price-tag |
-| `organisms/` | `theme-preview`, `sidebar`, `topbar` | data-table, file-dropzone, map-picker |
+| `organisms/` | `theme-preview`, `sidebar`, `topbar`, `image-dropzone` | data-table, file-dropzone, map-picker |
 | `templates/` | `dashboard-template` | marketing-template |
 | `lib/` | `utils` (`cn`), `theme`, `fonts` | — |
 
