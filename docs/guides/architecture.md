@@ -31,16 +31,20 @@ Léela cuando toques `packages/core`, `packages/api-client`, dependencias o la e
 
 ## 4. Módulos
 
-| Módulo | Requerimientos | Apps |
-|---|---|---|
-| `shared-kernel` | Conceptos comunes | todas |
-| `identity` | AUTH-01..04 | erp, admin |
-| `restaurant` | REST-01..05 | erp (y lectura en web/admin) |
-| `catalog` | CAT-01..05 | erp (y lectura en web) |
-| `orders` | intenciones de pedido (lectura), dominio de ORD-03 compartido con Expo | erp, admin |
-| `notifications` | NOT-01..02 | erp, admin |
-| `administration` | ADM-01..05 | admin |
-| `marketing` | WEB-01..06 | web |
+El código de un spec (CAT, NOT, REST…) agrupa tareas del documento de requerimientos; el módulo es un concepto de negocio. No siempre coinciden: el módulo se elige por **qué dato o regla maneja**, no por el prefijo del código.
+
+| Módulo | Qué maneja | Requerimientos | Apps |
+|---|---|---|---|
+| `shared-kernel` | Conceptos comunes | — | todas |
+| `identity` | Cuentas, sesión, contraseña | AUTH-01..04 | erp, admin |
+| `restaurant` | Datos del local: perfil, horario, marca, cobertura, abierto/cerrado | REST-01..04 | erp (y lectura en web/admin) |
+| `catalog` | Carta: categorías, platos, disponibilidad, importación | CAT-01..04 | erp (y lectura en web) |
+| `campaigns` | Promociones y eventos con vigencia | CAT-05 | erp (y lectura en web) |
+| `orders` | Intenciones de pedido (alerta y lista), dominio de ORD-03 compartido con Expo | NOT-01 | erp, admin |
+| `analytics` | Métricas del restaurante (producto de pago) | REST-05 | erp |
+| `notifications` | Avisos de Sysari y del sistema | NOT-02 | erp, admin |
+| `administration` | Gestión interna de Sysari | ADM-01..05 | admin |
+| `marketing` | Landing, captación y SEO | WEB-01..06 | web |
 
 ## 5. Capas
 

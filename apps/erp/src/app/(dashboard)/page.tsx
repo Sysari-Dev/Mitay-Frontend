@@ -1,4 +1,4 @@
-import { DashboardView } from '@/modules/restaurant/presentation/views/DashboardView'
+import { DashboardView } from '@/modules/analytics/presentation/views/DashboardView'
 
 export const metadata = { title: 'Inicio' }
 

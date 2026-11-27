@@ -2,7 +2,7 @@
 
 | Estado | Apps | Módulo | Fase | Depende de |
 |---|---|---|---|---|
-| ⬜ Pendiente | erp | notifications | 3 · Operación en vivo, administración y directorio | FND-04, AUTH-03 |
+| ⬜ Pendiente | erp | orders | 3 · Operación en vivo, administración y directorio | FND-04, AUTH-03 |
 
 ## Objetivo
 

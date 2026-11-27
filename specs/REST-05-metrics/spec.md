@@ -2,7 +2,7 @@
 
 | Estado | Apps | Módulo | Fase | Depende de |
 |---|---|---|---|---|
-| ⬜ Pendiente | erp | restaurant | 4 · Crecimiento y analítica | FND-04 |
+| ⬜ Pendiente | erp | analytics | 4 · Crecimiento y analítica | FND-04 |
 
 ## Objetivo
 

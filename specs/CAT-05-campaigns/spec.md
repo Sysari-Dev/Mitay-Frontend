@@ -2,7 +2,7 @@
 
 | Estado | Apps | Módulo | Fase | Depende de |
 |---|---|---|---|---|
-| ⬜ Pendiente | erp | catalog | 4 · Crecimiento y analítica | CAT-01, REST-02 |
+| ⬜ Pendiente | erp | campaigns | 4 · Crecimiento y analítica | CAT-01, REST-02 |
 
 ## Objetivo
 

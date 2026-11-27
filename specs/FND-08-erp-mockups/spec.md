@@ -2,7 +2,7 @@
 
 | Estado | Apps | Módulo | Fase | Depende de |
 |---|---|---|---|---|
-| 🟡 Esqueleto | erp | identity, restaurant, catalog, notifications | 0 · Fundaciones | FND-03, FND-04 |
+| 🟡 Esqueleto | erp | identity, restaurant, catalog, campaigns, orders, notifications, analytics | 0 · Fundaciones | FND-03, FND-04 |
 
 ## Objetivo
 
@@ -27,13 +27,13 @@ Navegación (sin "Configuración": el MVP solo muestra lo que funciona):
 | `/forgot-password` | `ForgotPasswordView` | identity | AUTH-04 |
 | `/reset-password` | `ResetPasswordView` | identity | AUTH-04 |
 | `/onboarding` | `OnboardingView` | restaurant | REST-01 |
-| `/` | `DashboardView` | restaurant | REST-05 |
+| `/` | `DashboardView` | analytics | REST-05 |
 | `/catalog` | `CatalogView` | catalog | CAT-01, CAT-02 |
 | `/catalog/dishes/new`, `/catalog/dishes/[id]` | `DishFormView` | catalog | CAT-01 |
 | `/catalog/import` | `CatalogImportView` (paso subir + paso revisar) | catalog | CAT-03, CAT-04 |
-| `/campaigns` | `CampaignsView` | catalog | CAT-05 |
-| `/campaigns/new`, `/campaigns/[id]` | `CampaignFormView` | catalog | CAT-05 |
-| `/orders` | `OrdersView` (en vivo + historial) | notifications | NOT-01 |
+| `/campaigns` | `CampaignsView` | campaigns | CAT-05 |
+| `/campaigns/new`, `/campaigns/[id]` | `CampaignFormView` | campaigns | CAT-05 |
+| `/orders` | `OrdersView` (en vivo + historial) | orders | NOT-01 |
 | `/notifications` | `NotificationsView` | notifications | NOT-02 |
 | `/restaurant` | `RestaurantProfileView` (pestaña Perfil) | restaurant | REST-01 |
 | `/restaurant/schedule` | `RestaurantScheduleView` (pestaña Horario) | restaurant | REST-01 |
