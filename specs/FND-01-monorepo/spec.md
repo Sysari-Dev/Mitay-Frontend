@@ -19,3 +19,5 @@ Base técnica del repositorio: tres apps Next.js y paquetes compartidos que se i
 ## Cómo
 
 - Ver [guía de arquitectura](../../docs/guides/architecture.md) y [ADR Monorepo](../../docs/adr/0001-monorepo.md).
+- `typecheck` de las apps corre `next typegen && tsc --noEmit`: genera `.next/types` por sí mismo, así funciona en un clon limpio sin `build` previo.
+- En `turbo.json`, `build` depende de `typecheck` del mismo paquete: `next build` regenera `.next/types` y, si corrían en paralelo, `tsc` fallaba con `TS6053` (archivo no encontrado).

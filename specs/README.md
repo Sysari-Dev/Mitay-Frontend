@@ -2,7 +2,7 @@
 
 Fuente única del **estado del proyecto**. Al iniciar una sesión, leer este archivo y luego solo el spec de la tarea a trabajar.
 
-Progreso: **2 hechas**, **1 en esqueleto**, **31 pendientes** de 34.
+Progreso: **2 hechas**, **1 en esqueleto**, **32 pendientes** de 35.
 
 Leyenda: ✅ Hecho · 🟡 Esqueleto / en progreso · ⬜ Pendiente
 
@@ -33,6 +33,7 @@ Este repo implementa la parte **web** del documento de requerimientos:
 | [FND-05](FND-05-data-layer/spec.md) | Capa de datos | erp, admin, web | ⬜ Pendiente | FND-01 |
 | [FND-06](FND-06-lint-rules/spec.md) | Reglas de arquitectura automáticas | todas | ⬜ Pendiente | FND-01 |
 | [FND-07](FND-07-ci-deploy/spec.md) | Git, CI y despliegue | todas | ⬜ Pendiente | FND-01 |
+| [FND-08](FND-08-erp-mockups/spec.md) | Maquetado del ERP (solo UI, datos de ejemplo) | erp | ⬜ Pendiente | FND-03, FND-04 |
 
 ## Fase 1 · Acceso y presencia pública
 
