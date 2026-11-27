@@ -18,7 +18,7 @@ Tener los componentes genéricos que necesitan todos los formularios, tablas y p
 
 ## Cómo
 
-- Agregar con `pnpm dlx shadcn@latest add <x>` desde `packages/ui` y limpiar según [guía de UI §7](../../docs/guides/ui.md).
+- Agregar con `pnpm dlx shadcn@latest add <x>` desde `packages/ui` y limpiar según [guía de UI §8](../../docs/guides/ui.md).
 - Dependencias nuevas: `react-hook-form`, `zod`, `@hookform/resolvers`, `sonner`, `@tanstack/react-table`, `lucide-react` (al catalog).
 
 ## Fuera de alcance

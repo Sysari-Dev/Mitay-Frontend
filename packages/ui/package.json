@@ -19,6 +19,7 @@
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",
+    "lucide-react": "catalog:",
     "radix-ui": "^1.8.1"
   },
   "devDependencies": {

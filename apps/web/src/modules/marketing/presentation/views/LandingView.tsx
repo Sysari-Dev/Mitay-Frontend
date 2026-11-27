@@ -12,7 +12,7 @@ export function LandingView() {
         </span>
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          <Button asChild variant="secondary" size="sm">
+          <Button asChild color="secondary" size="sm">
             <a href={erpUrl}>Soy restaurante</a>
           </Button>
         </div>

@@ -13,6 +13,7 @@
     "@mitay/core": "workspace:*",
     "@mitay/ui": "workspace:*",
     "@mitay/utils": "workspace:*",
+    "lucide-react": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"

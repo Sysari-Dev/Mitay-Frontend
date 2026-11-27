@@ -4,7 +4,10 @@ import { themeScript } from '@mitay/ui/lib/theme'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'MITAY Panel | Restaurantes',
+  title: {
+    default: 'MITAY Panel | Restaurantes',
+    template: '%s | MITAY Panel',
+  },
   description: 'Panel de gestión para restaurantes en MITAY.',
 }
 

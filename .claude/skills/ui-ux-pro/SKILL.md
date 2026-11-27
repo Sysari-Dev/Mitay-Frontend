@@ -26,7 +26,8 @@ Manual para diseñar interfaces comerciales y móviles de calidad. Complementa (
 
 ## 2. Jerarquía visual
 
-- Un solo foco por pantalla: un único botón `variant="default"` (primary, Rocoto). El resto `secondary`, `outline` o `ghost`.
+- Un solo foco por pantalla: un único `<Button>` relleno en `primary` (Rocoto). El resto en `outline`, `ghost` o `link`, o en otro `color`.
+- Todo botón es `Button` de `@mitay/ui/atoms/button`; nunca `<button>` con estilos propios. Un enlace con forma de botón usa `<Button asChild><Link /></Button>`.
 - Escala tipográfica limitada: título de página, título de sección, cuerpo, apoyo. No inventar tamaños intermedios.
 - Títulos con `font-heading` (Nunito, automático en `h1`–`h4`); cuerpo con `font-sans` (Figtree). Un `h1` por página y niveles sin saltos.
 - Jerarquía por tamaño, peso y espacio antes que por color. `text-muted-foreground` para texto de apoyo, nunca para información crítica.

@@ -10,7 +10,7 @@ app/(group)/route/page.tsx  → ruta de Next: params, metadata, permisos. Render
       └─ Sections           → modules/<module>/presentation/sections
           └─ Components     → modules/<module>/presentation/components (negocio)
               └─ @mitay/ui  → atoms / molecules / organisms (genéricos)
-layout.tsx                  → usa templates de @mitay/ui
+layout.tsx                  → renderiza el layout de la app (p. ej. ErpLayout en shared/components), que arma un template de @mitay/ui
 ```
 
 ```tsx
@@ -28,9 +28,9 @@ export default function Page() {
 | Nivel | Existe hoy | Ejemplos futuros |
 |---|---|---|
 | `atoms/` | `button`, `badge` | input, avatar, switch |
-| `molecules/` | `theme-toggle` | form-field, search-bar, price-tag |
-| `organisms/` | `theme-preview` | data-table, sidebar, file-dropzone, map-picker |
-| `templates/` | — | dashboard-template, marketing-template |
+| `molecules/` | `theme-toggle`, `sidebar-nav-item` | form-field, search-bar, price-tag |
+| `organisms/` | `theme-preview`, `sidebar`, `topbar` | data-table, file-dropzone, map-picker |
+| `templates/` | `dashboard-template` | marketing-template |
 | `lib/` | `utils` (`cn`), `theme`, `fonts` | — |
 
 Componentes con vocabulario de negocio (DishCard, ScheduleEditor, LiveOrderToast) van en `presentation/` del módulo, nunca en `packages/ui`.
@@ -86,7 +86,30 @@ En `packages/ui/src/styles/globals.css`: claros en `:root`, oscuros en `.dark`. 
 - `@mitay/ui/molecules/theme-toggle` y `@mitay/ui/organisms/theme-preview`.
 - Un color nuevo se agrega en tres lugares: `:root`, `.dark` y `@theme inline`.
 
-## 7. Agregar componentes de shadcn/ui
+## 7. Botón
+
+Único botón del sistema: `Button` de `@mitay/ui/atoms/button`. No se escriben `<button>` con estilos propios en apps ni en otros componentes.
+
+| Prop | Valores | Por defecto |
+|---|---|---|
+| `variant` | `filled`, `outline`, `ghost`, `link` | `filled` |
+| `color` | `primary`, `secondary`, `tertiary`, `brand`, `destructive`, `success`, `warning`, `info`, `neutral` | `primary` |
+| `size` | `sm`, `default`, `lg`, `icon-sm`, `icon`, `icon-lg` (44 px, táctil) | `default` |
+| `animated` | `true`: crece sutilmente al pasar el cursor y se encoge al presionar (respeta `prefers-reduced-motion`) | `false` |
+| `asChild` | Aplica los estilos a su hijo (`Link`, `a`) | `false` |
+
+- Siempre `cursor-pointer`; deshabilitado con `cursor-not-allowed` y opacidad. `type="button"` por defecto (los de envío llevan `type="submit"`).
+- Los colores salen de tokens, así que el tema oscuro se aplica solo.
+- Botones de solo icono llevan `aria-label`.
+- `neutral` es para acciones de interfaz (menú, cerrar, cambiar tema); los colores de marca, para acciones de negocio.
+
+```tsx
+<Button>Publicar carta</Button>
+<Button variant="outline" color="secondary" animated>Ver campañas</Button>
+<Button variant="ghost" color="neutral" size="icon-lg" aria-label="Cerrar menú"><X /></Button>
+```
+
+## 8. Agregar componentes de shadcn/ui
 
 ```bash
 cd packages/ui
